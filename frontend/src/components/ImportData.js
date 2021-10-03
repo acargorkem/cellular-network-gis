@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 const allowedExtensions = /(\.kmz|\.kml)$/i;
 
@@ -8,7 +9,11 @@ class ImportData extends React.Component {
     super(props);
   }
 
-  onFileChange(event) {
+  handleDataChange(payload) {
+    this.props.dispatchImportedData(payload);
+  }
+
+  async onFileChange(event) {
     const file = event.target.files[0];
     if (!allowedExtensions.exec(file.name)) {
       return alert('Only .kml and .kmz format allowed!');
@@ -17,29 +22,11 @@ class ImportData extends React.Component {
     const data = new FormData();
     data.append('file', file);
 
-    axios
-      .post('http://localhost:5000/file-upload', data)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch(function (error) {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log('Error', error.message);
-        }
-        console.log(error.config);
-      });
+    const response = await axios.post(
+      'http://localhost:5000/file-upload',
+      data
+    );
+    this.handleDataChange(response.data);
   }
 
   render() {
@@ -49,11 +36,28 @@ class ImportData extends React.Component {
           className="button-topleft"
           type="File"
           text="Upload File"
-          onChange={this.onFileChange}
+          onChange={this.onFileChange.bind(this)}
         />
       </div>
     );
   }
 }
 
-export default ImportData;
+const mapStateToProps = (state) => {
+  return {
+    geospatialData: state.geospatialData,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatchImportedData: (payload) => {
+      dispatch({
+        type: 'DATA_IMPORTED',
+        payload: payload,
+      });
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ImportData);

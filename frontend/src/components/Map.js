@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './Map.css';
 import { Viewer } from 'resium';
 import {
@@ -10,6 +11,7 @@ import {
 } from 'cesium';
 
 import ImportData from './ImportData';
+import Visualization from './Visualization';
 
 const terrainProvider = createWorldTerrain();
 // const pointGraphics = { pixelSize: 10 };
@@ -19,14 +21,9 @@ class Map extends React.Component {
     super(props);
     this.cesium = React.createRef();
   }
-  componentDidMount() {
-    const { viewer } = this;
-    if (viewer) {
-      console.log('assigned');
-    }
-  }
+
+  componentDidMount() {}
   getLocationFromScreenXY(x, y) {
-    //const scene = this.viewer.current?.cesiumElement?.scene;
     const scene = this.viewer.scene;
     if (!scene) return;
     const ellipsoid = scene.globe.ellipsoid;
@@ -35,18 +32,8 @@ class Map extends React.Component {
       new Cartesian2(x, y),
       ellipsoid
     );
-
     if (!cartesian) return;
-    // let { latitude, longitude, height } =
-    //   ellipsoid.cartesianToCartographic(cartesian);
     let cartographic = ellipsoid.cartesianArrayToCartographicArray([cartesian]);
-    // console.log(latitude);
-    // console.log(longitude);
-    // latitude = CesiumMath.toDegrees(latitude);
-    // longitude = CesiumMath.toDegrees(longitude);
-    // console.log(cartesian);
-    // console.log('Cartographic:', latitude, longitude, height);
-
     sampleTerrainMostDetailed(terrainProvider, cartographic).then(
       (updatedPositions) => {
         let latitude = CesiumMath.toDegrees(updatedPositions[0].latitude);
@@ -58,22 +45,8 @@ class Map extends React.Component {
     );
   }
 
-  // async getPositionsFromSampleTerrain(latitude, longitude, height) {
-  // try {
-  // const result = await sampleTerrain(this.viewer.terrainProvider, 9, [
-  // latitude,
-  // longitude,
-  // height,
-  // ]);
-
-  // return Promise.resolve(result);
-  // } catch (err) {
-  // return Promise.reject(err);
-  // }
-  // }
-
-  loadKMLData() {
-    console.log('loaded', this);
+  onDataChange() {
+    console.log(this.props.importedData);
   }
 
   render() {
@@ -94,9 +67,25 @@ class Map extends React.Component {
         }}
       >
         <ImportData />
+        <Visualization />
       </Viewer>
     );
   }
 }
 
-export default Map;
+const mapStateToProps = (state) => {
+  return {
+    importedData: state.importedData,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dataImported: () =>
+      dispatch({
+        type: 'DATA_IMPORTED',
+      }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);

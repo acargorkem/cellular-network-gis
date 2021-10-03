@@ -13,7 +13,9 @@
     "mapbox-gl": "^2.4.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-redux": "^7.2.5",
     "react-scripts": "4.0.3",
+    "redux": "^4.1.1",
     "resium": "^1.14.2",
     "web-vitals": "^1.1.2"
   },
