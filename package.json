@@ -1,0 +1,14 @@
+{
+  "name": "cellular-network-gis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\" "
+  },
+  "author": "Görkem Acar",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^6.2.2"
+  }
+}
