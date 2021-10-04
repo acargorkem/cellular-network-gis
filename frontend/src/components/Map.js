@@ -7,27 +7,30 @@ import {
   Cartesian2,
   Math as CesiumMath,
   sampleTerrainMostDetailed,
-  // PinBuilder,
 } from 'cesium';
 
 import ImportData from './ImportData';
 import Visualization from './Visualization';
 
 const terrainProvider = createWorldTerrain();
-// const pointGraphics = { pixelSize: 10 };
 
 class Map extends React.Component {
   constructor(props) {
     super(props);
     this.cesium = React.createRef();
+    this.state = {
+      latitude: 0,
+      longitude: 0,
+      height: 0,
+    };
   }
 
   componentDidMount() {}
+
   getLocationFromScreenXY(x, y) {
     const scene = this.viewer.scene;
     if (!scene) return;
     const ellipsoid = scene.globe.ellipsoid;
-    // console.log(ellipsoid);
     const cartesian = scene.camera.pickEllipsoid(
       new Cartesian2(x, y),
       ellipsoid
@@ -40,13 +43,9 @@ class Map extends React.Component {
         let longitude = CesiumMath.toDegrees(updatedPositions[0].longitude);
         let height = updatedPositions[0].height;
 
-        return { latitude, longitude, height };
+        this.setState({ latitude, longitude, height });
       }
     );
-  }
-
-  onDataChange() {
-    console.log(this.props.importedData);
   }
 
   render() {
@@ -56,14 +55,11 @@ class Map extends React.Component {
         terrainProvider={terrainProvider}
         timeline={false}
         animation={false}
-        // baseLayerPicker={false}
         ref={(e) => {
           this.viewer = e ? e.cesiumElement : null;
         }}
         onMouseMove={(e) => {
-          // let location =
           this.getLocationFromScreenXY(e.endPosition.x, e.endPosition.y);
-          // console.log(location);
         }}
       >
         <ImportData />
@@ -75,16 +71,18 @@ class Map extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    importedData: state.importedData,
+    geospatialData: state.geospatialData,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    dataImported: () =>
+    dispatchImportedData: (payload) => {
       dispatch({
         type: 'DATA_IMPORTED',
-      }),
+        payload: payload,
+      });
+    },
   };
 };
 
