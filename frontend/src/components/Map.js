@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import './Map.css';
-import { Viewer } from 'resium';
+import { Viewer, Camera } from 'resium';
 import {
   createWorldTerrain,
   Cartesian2,
@@ -18,6 +18,7 @@ class Map extends React.Component {
   constructor(props) {
     super(props);
     this.cesium = React.createRef();
+    this.camera = React.createRef();
     this.state = {
       latitude: 0,
       longitude: 0,
@@ -62,8 +63,9 @@ class Map extends React.Component {
           this.getLocationFromScreenXY(e.endPosition.x, e.endPosition.y);
         }}
       >
+        <Camera ref={this.camera} />
         <ImportData />
-        <Visualization />
+        <Visualization getCamera={this.camera} />
       </Viewer>
     );
   }
