@@ -1,18 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import './Map.css';
+import baseConfig from '../config';
 import { Viewer, Camera } from 'resium';
 import {
-  createWorldTerrain,
   Cartesian2,
   Math as CesiumMath,
   sampleTerrainMostDetailed,
+  CesiumTerrainProvider,
+  Ion,
+  IonResource,
 } from 'cesium';
 
 import ImportData from './ImportData';
 import Visualization from './Visualization';
 
-const terrainProvider = createWorldTerrain();
+Ion.defaultAccessToken = baseConfig.cesiumIonToken;
+const terrainProvider = new CesiumTerrainProvider({
+  url: IonResource.fromAssetId(1),
+});
 
 class Map extends React.Component {
   constructor(props) {
@@ -56,6 +62,9 @@ class Map extends React.Component {
         terrainProvider={terrainProvider}
         timeline={false}
         animation={false}
+        baseLayerPicker={false}
+        geocoder={false}
+        homeButton={false}
         ref={(e) => {
           this.viewer = e ? e.cesiumElement : null;
         }}
