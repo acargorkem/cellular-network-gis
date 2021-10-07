@@ -9,10 +9,6 @@ class ImportData extends React.Component {
     super(props);
   }
 
-  handleDataChange(payload) {
-    this.props.dispatchImportedData(payload);
-  }
-
   async onFileChange(event) {
     const file = event.target.files[0];
     if (!allowedExtensions.exec(file.name)) {
@@ -26,7 +22,7 @@ class ImportData extends React.Component {
       'http://localhost:5000/file-upload',
       data
     );
-    this.handleDataChange(response.data);
+    this.props.dispatchImportedData(response.data);
   }
 
   render() {
@@ -43,12 +39,6 @@ class ImportData extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    geospatialData: state.geospatialData,
-  };
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
     dispatchImportedData: (payload) => {
@@ -60,4 +50,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ImportData);
+export default connect(null, mapDispatchToProps)(ImportData);

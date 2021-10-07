@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import './Map.css';
 import baseConfig from '../config';
 import { Viewer, Camera } from 'resium';
@@ -16,6 +15,7 @@ import ImportData from './ImportData';
 import Visualization from './Visualization';
 
 Ion.defaultAccessToken = baseConfig.cesiumIonToken;
+
 const terrainProvider = new CesiumTerrainProvider({
   url: IonResource.fromAssetId(1),
 });
@@ -64,7 +64,6 @@ class Map extends React.Component {
         animation={false}
         baseLayerPicker={false}
         geocoder={false}
-        homeButton={false}
         ref={(e) => {
           this.viewer = e ? e.cesiumElement : null;
         }}
@@ -80,21 +79,4 @@ class Map extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    geospatialData: state.geospatialData,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    dispatchImportedData: (payload) => {
-      dispatch({
-        type: 'DATA_IMPORTED',
-        payload: payload,
-      });
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Map);
+export default Map;

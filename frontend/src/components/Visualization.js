@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { GeoJsonDataSource } from 'resium';
 import { Math as CesiumMath, Cartographic } from 'cesium';
+import CoverageArea from './CoverageArea';
 
 class Visualization extends React.Component {
   constructor(props) {
@@ -19,20 +20,16 @@ class Visualization extends React.Component {
         ...this.props.geospatialData.geoJson.features[0].geometry.coordinates,
       ];
       this.cameraFlyToLoadedData(firstCoordsInGeoJson);
-      this.visualizeGeoJsonDataSource();
+      this.setState({ isShown: true });
     }
   }
 
-  visualizeGeoJsonDataSource() {
-    this.setState({ isShown: true });
-  }
-
   cartographicToCartesian(cartographicCoords) {
-    const latitude = CesiumMath.toRadians(cartographicCoords[0]);
-    const longitude = CesiumMath.toRadians(cartographicCoords[1]);
+    const longitude = CesiumMath.toRadians(cartographicCoords[0]);
+    const latitude = CesiumMath.toRadians(cartographicCoords[1]);
     const height = cartographicCoords[2];
 
-    const cartographic = new Cartographic(latitude, longitude, height);
+    const cartographic = new Cartographic(longitude, latitude, height);
     const cartesian = Cartographic.toCartesian(cartographic);
     return cartesian;
   }
@@ -52,7 +49,9 @@ class Visualization extends React.Component {
       <GeoJsonDataSource
         data={this.props.geospatialData.geoJson}
         show={this.state.isShown}
-      ></GeoJsonDataSource>
+      >
+        <CoverageArea />
+      </GeoJsonDataSource>
     );
   }
 }
@@ -63,15 +62,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    dispatchImportedData: (payload) => {
-      dispatch({
-        type: 'DATA_IMPORTED',
-        payload: payload,
-      });
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Visualization);
+export default connect(mapStateToProps, null)(Visualization);
