@@ -72,7 +72,7 @@ class Map extends React.Component {
         }}
       >
         <Camera ref={this.camera} />
-        <ImportData />
+        <ImportData getTerrainProvider={terrainProvider} />
         <Visualization getCamera={this.camera} />
       </Viewer>
     );
