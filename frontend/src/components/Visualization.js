@@ -40,7 +40,7 @@ class Visualization extends React.Component {
     const camera = this.props.getCamera.current.cesiumElement;
     camera.flyTo({
       destination: destination,
-      duration: 5,
+      duration: 4,
     });
   }
 
