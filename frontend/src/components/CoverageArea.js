@@ -8,8 +8,12 @@ class CoverageArea extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      coverageAreaBounds: [],
-      coverageDistanceForMinus65Db: 250,
+      boundsMinus65Dbm: [],
+      distanceMinus65Dbm: 100,
+      boundsMinus80Dbm: [],
+      distanceMinus80Dbm: 150,
+      boundsMinus100Dbm: [],
+      distanceMinus100Dbm: 200,
     };
   }
 
@@ -23,28 +27,79 @@ class CoverageArea extends React.Component {
   }
 
   setCoverageAreaBounds(features) {
-    let distance = this.state.coverageDistanceForMinus65Db;
-    let positions = getCoverageAreaBoundsForFeatures(features, distance);
+    let minus65DbmDistance = this.state.distanceMinus65Dbm;
+    let minus65DbmPositions = getCoverageAreaBoundsForFeatures(
+      features,
+      minus65DbmDistance
+    );
+
+    let minus80DbmDistance = this.state.distanceMinus80Dbm;
+    let minus80DbmPositions = getCoverageAreaBoundsForFeatures(
+      features,
+      minus80DbmDistance
+    );
+
+    let minus100DbmDistance = this.state.distanceMinus100Dbm;
+    let minus100DbmPositions = getCoverageAreaBoundsForFeatures(
+      features,
+      minus100DbmDistance
+    );
+
+    let minus80DbmBounds = minus65DbmPositions.concat(minus80DbmPositions);
+    let minus100DbmBounds = minus80DbmPositions.concat(minus100DbmPositions);
 
     this.setState({
-      coverageAreaBounds: [...positions],
+      boundsMinus65Dbm: [...minus65DbmPositions],
+      boundsMinus80Dbm: [...minus80DbmBounds],
+      boundsMinus100Dbm: [...minus100DbmBounds],
     });
   }
 
   render() {
-    const polygonGraphics = this.state.coverageAreaBounds.map(
+    const polygonGraphicsMinus65Dbm = this.state.boundsMinus65Dbm.map(
       (coverageArea, index) => {
         return (
           <Entity key={index}>
             <PolygonGraphics
               hierarchy={coverageArea}
-              material={Color.RED.withAlpha(0.5)}
+              material={Color.fromCssColorString('#70be2d').withAlpha(0.4)}
             />
           </Entity>
         );
       }
     );
-    return polygonGraphics;
+
+    const polygonGraphicsMinus80Dbm = this.state.boundsMinus80Dbm.map(
+      (coverageArea, index) => {
+        return (
+          <Entity key={index}>
+            <PolygonGraphics
+              hierarchy={coverageArea}
+              material={Color.fromCssColorString('#ffe300').withAlpha(0.4)}
+            />
+          </Entity>
+        );
+      }
+    );
+
+    const polygonGraphicsMinus100Dbm = this.state.boundsMinus100Dbm.map(
+      (coverageArea, index) => {
+        return (
+          <Entity key={index}>
+            <PolygonGraphics
+              hierarchy={coverageArea}
+              material={Color.fromCssColorString('#ff380f').withAlpha(0.4)}
+            />
+          </Entity>
+        );
+      }
+    );
+
+    return [
+      polygonGraphicsMinus65Dbm,
+      polygonGraphicsMinus80Dbm,
+      polygonGraphicsMinus100Dbm,
+    ];
   }
 }
 
