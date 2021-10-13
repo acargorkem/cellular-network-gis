@@ -49,6 +49,7 @@ class Visualization extends React.Component {
       <GeoJsonDataSource
         data={this.props.geospatialData.geoJson}
         show={this.state.isShown}
+        markerSize={24}
       >
         <CoverageArea />
       </GeoJsonDataSource>

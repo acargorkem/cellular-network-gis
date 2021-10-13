@@ -16,7 +16,6 @@ class ImportData extends React.Component {
 
   async onFileChange(event) {
     const file = event.target.files[0];
-    console.log(file);
     if (!allowedExtensions.exec(file.name)) {
       return alert('Only .kml and .kmz format allowed!');
     }

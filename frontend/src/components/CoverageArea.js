@@ -45,13 +45,10 @@ class CoverageArea extends React.Component {
       minus100DbmDistance
     );
 
-    let minus80DbmBounds = minus65DbmPositions.concat(minus80DbmPositions);
-    let minus100DbmBounds = minus80DbmPositions.concat(minus100DbmPositions);
-
     this.setState({
       boundsMinus65Dbm: [...minus65DbmPositions],
-      boundsMinus80Dbm: [...minus80DbmBounds],
-      boundsMinus100Dbm: [...minus100DbmBounds],
+      boundsMinus80Dbm: [...minus80DbmPositions],
+      boundsMinus100Dbm: [...minus100DbmPositions],
     });
   }
 
@@ -59,10 +56,11 @@ class CoverageArea extends React.Component {
     const polygonGraphicsMinus65Dbm = this.state.boundsMinus65Dbm.map(
       (coverageArea, index) => {
         return (
-          <Entity key={index}>
+          <Entity key={index} name={'-65 DBm'}>
             <PolygonGraphics
+              zIndex={3}
               hierarchy={coverageArea}
-              material={Color.fromCssColorString('#70be2d').withAlpha(0.4)}
+              material={Color.fromCssColorString('#70be2d').withAlpha(0.7)}
             />
           </Entity>
         );
@@ -72,10 +70,11 @@ class CoverageArea extends React.Component {
     const polygonGraphicsMinus80Dbm = this.state.boundsMinus80Dbm.map(
       (coverageArea, index) => {
         return (
-          <Entity key={index}>
+          <Entity key={index} name={'-80 DBm'} onDoubleClick={null}>
             <PolygonGraphics
+              zIndex={2}
               hierarchy={coverageArea}
-              material={Color.fromCssColorString('#ffe300').withAlpha(0.4)}
+              material={Color.fromCssColorString('#ffe300').withAlpha(0.5)}
             />
           </Entity>
         );
@@ -85,8 +84,9 @@ class CoverageArea extends React.Component {
     const polygonGraphicsMinus100Dbm = this.state.boundsMinus100Dbm.map(
       (coverageArea, index) => {
         return (
-          <Entity key={index}>
+          <Entity key={index} name={'-100 DBm'}>
             <PolygonGraphics
+              zIndex={1}
               hierarchy={coverageArea}
               material={Color.fromCssColorString('#ff380f').withAlpha(0.4)}
             />
