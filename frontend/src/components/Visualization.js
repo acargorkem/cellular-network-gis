@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { GeoJsonDataSource } from 'resium';
 import { Math as CesiumMath, Cartographic } from 'cesium';
 import CoverageArea from './CoverageArea';
+import antennaLogo from '../assets/icons/communications-tower.svg';
 
 class Visualization extends React.Component {
   constructor(props) {
@@ -43,13 +44,20 @@ class Visualization extends React.Component {
       duration: 4,
     });
   }
+  onLoadHandle(event) {
+    // You can process the data source here
+    event.entities.values.map((item) => {
+      item.billboard.image = antennaLogo;
+    });
+  }
 
   render() {
     return (
       <GeoJsonDataSource
         data={this.props.geospatialData.geoJson}
         show={this.state.isShown}
-        markerSize={24}
+        markerSize={36}
+        onLoad={(event) => this.onLoadHandle(event)}
       >
         <CoverageArea />
       </GeoJsonDataSource>
