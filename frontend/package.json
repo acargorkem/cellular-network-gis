@@ -10,6 +10,7 @@
     "axios": "^0.21.4",
     "cesium": "^1.85.0",
     "craco-cesium": "^1.2.0",
+    "dotenv": "^10.0.0",
     "mapbox-gl": "^2.4.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

@@ -5,9 +5,7 @@ import { hot } from 'react-hot-loader/root';
 function App() {
   return (
     <div>
-      <Map>
-        <button>button</button>
-      </Map>
+      <Map />
     </div>
   );
 }
