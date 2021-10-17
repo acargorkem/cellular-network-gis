@@ -28,7 +28,8 @@ const storage = multer.diskStorage({
   filename: (req, file, callback) => {
     let unixTimeStamp = Date.now();
     let randomNumber = getRandomInt(9999);
-    callback(null, `${unixTimeStamp}_${randomNumber}.kmz`);
+    let extension = file.originalname.slice(-3);
+    callback(null, `${unixTimeStamp}_${randomNumber}.${extension}`);
   },
 });
 
