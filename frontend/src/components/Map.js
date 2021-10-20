@@ -16,7 +16,7 @@ import Visualization from './Visualization';
 
 Ion.defaultAccessToken = baseConfig.cesiumIonToken;
 
-const terrainProvider = new CesiumTerrainProvider({
+export const terrainProvider = new CesiumTerrainProvider({
   url: IonResource.fromAssetId(1),
 });
 
@@ -64,6 +64,7 @@ class Map extends React.Component {
         animation={false}
         baseLayerPicker={false}
         geocoder={false}
+        selectionIndicator={false}
         ref={(e) => {
           this.viewer = e ? e.cesiumElement : null;
         }}
@@ -72,7 +73,7 @@ class Map extends React.Component {
         }}
       >
         <Camera ref={this.camera} />
-        <ImportData getTerrainProvider={terrainProvider} />
+        <ImportData />
         <Visualization getCamera={this.camera} />
       </Viewer>
     );

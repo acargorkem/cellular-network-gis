@@ -1,8 +1,8 @@
-import api from './apiConfig';
+import api from './api-config';
 
 class MapApi {
-  getMap() {
-    return api.get('/');
+  uploadKmlFile(file) {
+    return api.post('file-upload', file);
   }
 }
 

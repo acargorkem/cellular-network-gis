@@ -8,20 +8,16 @@ import antennaLogo from '../assets/icons/communications-tower.svg';
 class Visualization extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isShown: false,
-    };
   }
 
   componentDidMount() {}
 
   componentDidUpdate(prevProps) {
-    if (prevProps.geospatialData !== this.props.geospatialData) {
+    if (prevProps.geoJson !== this.props.geoJson) {
       const firstCoordsInGeoJson = [
-        ...this.props.geospatialData.geoJson.features[0].geometry.coordinates,
+        ...this.props.geoJson.features[0].geometry.coordinates,
       ];
       this.cameraFlyToLoadedData(firstCoordsInGeoJson);
-      this.setState({ isShown: true });
     }
   }
 
@@ -45,7 +41,6 @@ class Visualization extends React.Component {
     });
   }
   onLoadHandle(event) {
-    // You can process the data source here
     event.entities.values.map((item) => {
       item.billboard.image = antennaLogo;
     });
@@ -54,8 +49,7 @@ class Visualization extends React.Component {
   render() {
     return (
       <GeoJsonDataSource
-        data={this.props.geospatialData.geoJson}
-        show={this.state.isShown}
+        data={this.props.geoJson}
         markerSize={36}
         onLoad={(event) => this.onLoadHandle(event)}
       >
@@ -67,7 +61,7 @@ class Visualization extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    geospatialData: state.geospatialData,
+    geoJson: state.geoJson,
   };
 };
 
