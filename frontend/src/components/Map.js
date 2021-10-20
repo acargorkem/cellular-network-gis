@@ -11,7 +11,6 @@ import {
   IonResource,
 } from 'cesium';
 
-import ImportData from './ImportData';
 import Visualization from './Visualization';
 
 Ion.defaultAccessToken = baseConfig.cesiumIonToken;
@@ -65,6 +64,7 @@ class Map extends React.Component {
         baseLayerPicker={false}
         geocoder={false}
         selectionIndicator={false}
+        fullscreenButton={false}
         ref={(e) => {
           this.viewer = e ? e.cesiumElement : null;
         }}
@@ -73,7 +73,6 @@ class Map extends React.Component {
         }}
       >
         <Camera ref={this.camera} />
-        <ImportData />
         <Visualization getCamera={this.camera} />
       </Viewer>
     );

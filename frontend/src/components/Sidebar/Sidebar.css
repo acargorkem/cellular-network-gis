@@ -1,0 +1,13 @@
+.sidebar {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 0.8;
+  background-color: #404040;
+  z-index: 100 !important;
+}

@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchGeojsonFromApi } from '../store/geojsonSlice';
+import { fetchGeojsonFromApi } from '../../store/geojsonSlice';
 
 const allowedExtensions = /(\.kmz|\.kml)$/i;
 
-class ImportData extends React.Component {
+class FileUpload extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -25,7 +25,7 @@ class ImportData extends React.Component {
     return (
       <div>
         <input
-          className="button-topleft"
+          className="file-upload"
           type="File"
           text="Upload File"
           onChange={this.onFileChange.bind(this)}
@@ -35,4 +35,4 @@ class ImportData extends React.Component {
   }
 }
 
-export default connect(null, { fetchGeojsonFromApi })(ImportData);
+export default connect(null, { fetchGeojsonFromApi })(FileUpload);
