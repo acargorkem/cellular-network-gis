@@ -1,5 +1,5 @@
 .sidebar {
-  display: inline-block;
+  display: block;
   position: absolute;
   top: 0;
   left: 0;
@@ -7,7 +7,26 @@
   height: 100%;
   margin: 0;
   padding: 0;
-  opacity: 0.8;
-  background-color: #404040;
+  opacity: 0.5;
+  background-color: #fff;
   z-index: 100 !important;
+}
+
+.sidebar.inactive {
+  display: none;
+}
+
+.button-sidebar {
+  display: block;
+  top: 10;
+  position: fixed;
+}
+
+.button-sidebar.active {
+  left: 410px;
+}
+
+.button-sidebar.inactive {
+  display: block;
+  left: 0px;
 }

@@ -11,6 +11,7 @@ const initialState = {
 export const fetchGeojsonFromApi = createAsyncThunk(
   'geospatial/fetchGeoSpatial',
   async (data) => {
+    // TODO: HANDLE ERRORS
     const response = await MapApi.uploadKmlFile(data);
     await addTerrainHeightToData(response.data.geoJson.features); // mutating response data
 

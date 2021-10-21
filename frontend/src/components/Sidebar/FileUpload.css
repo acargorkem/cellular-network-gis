@@ -1,0 +1,22 @@
+.sidebar-dropzone {
+  border: 4px dashed blue;
+  border-radius: 0.5em;
+  margin: 0.5em;
+  padding: 0.5em;
+  font-size: 2em;
+  font-weight: 600;
+  text-align: center;
+  height: 200px;
+}
+
+.sidebar-dropzone-file {
+  font-size: 1.2em;
+}
+
+.accept {
+  border-color: rgb(0, 255, 0);
+}
+
+.reject {
+  border-color: red;
+}
