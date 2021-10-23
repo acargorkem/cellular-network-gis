@@ -13,9 +13,9 @@ class Visualization extends React.Component {
   componentDidMount() {}
 
   componentDidUpdate(prevProps) {
-    if (prevProps.geoJson !== this.props.geoJson) {
+    if (prevProps.coverageAreaGeojson !== this.props.coverageAreaGeojson) {
       const firstCoordsInGeoJson = [
-        ...this.props.geoJson.features[0].geometry.coordinates,
+        ...this.props.coverageAreaGeojson.features[0].geometry.coordinates,
       ];
       this.cameraFlyToLoadedData(firstCoordsInGeoJson);
     }
@@ -49,7 +49,8 @@ class Visualization extends React.Component {
   render() {
     return (
       <GeoJsonDataSource
-        data={this.props.geoJson}
+        // TODO: CLUSTER EFFECT- SMALL ICONS ON ZOOM OUT
+        data={this.props.coverageAreaGeojson}
         markerSize={36}
         onLoad={(event) => this.onLoadHandle(event)}
       >
@@ -61,7 +62,7 @@ class Visualization extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    geoJson: state.geoJson,
+    coverageAreaGeojson: state.coverageArea.geoJson,
   };
 };
 

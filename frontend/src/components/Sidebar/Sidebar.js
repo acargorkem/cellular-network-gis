@@ -1,33 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import SidebarToggleButton from './SidebarToggleButton';
 import FileUpload from './FileUpload';
 import './Sidebar.css';
 
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isSidebarActive: true,
-    };
-  }
-
-  sidebarToggle() {
-    this.setState((prevState) => ({
-      isSidebarActive: !prevState.isSidebarActive,
-    }));
   }
 
   render() {
     const toggleStyle = () => {
-      return this.state.isSidebarActive ? 'active' : 'inactive';
+      return this.props.isSidebarShown ? 'active' : 'inactive';
     };
     return (
       <div className={'siderbar-container'}>
-        <button
-          className={`button-sidebar ${toggleStyle()}`}
-          onClick={this.sidebarToggle.bind(this)}
-        >
-          SideBar On/Off
-        </button>
+        <SidebarToggleButton addClass={toggleStyle()} />
         <div className={`sidebar ${toggleStyle()}`}>
           <FileUpload />
         </div>
@@ -36,4 +24,11 @@ class Sidebar extends React.Component {
   }
 }
 
-export default Sidebar;
+const mapStateToProps = (state) => {
+  return {
+    coverageAreaGeojson: state.coverageArea.geoJson,
+    isSidebarShown: state.sidebar.isSidebarShown,
+  };
+};
+
+export default connect(mapStateToProps, null)(Sidebar);

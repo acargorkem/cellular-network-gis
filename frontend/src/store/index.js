@@ -1,13 +1,12 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-// import reducer from '../reducer/index';
-import thunk from 'redux-thunk';
-import { geoSpatialSlice } from './geojsonSlice';
+import { configureStore } from '@reduxjs/toolkit';
+import { geojsonSlice } from './geojsonSlice';
+import { sidebarSlice } from './sidebarSlice';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const store = createStore(
-  geoSpatialSlice.reducer,
-  composeEnhancers(applyMiddleware(thunk))
-);
+export const store = configureStore({
+  reducer: {
+    coverageArea: geojsonSlice.reducer,
+    sidebar: sidebarSlice.reducer,
+  },
+});
 
 export default store;

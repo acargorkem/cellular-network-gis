@@ -20,8 +20,8 @@ class CoverageArea extends React.Component {
   componentDidMount() {}
 
   componentDidUpdate(prevProps) {
-    if (prevProps.geoJson !== this.props.geoJson) {
-      const features = [...this.props.geoJson.features];
+    if (prevProps.coverageAreaGeojson !== this.props.coverageAreaGeojson) {
+      const features = [...this.props.coverageAreaGeojson.features];
       this.setCoverageAreaBounds(features);
     }
   }
@@ -105,7 +105,7 @@ class CoverageArea extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    geoJson: state.geoJson,
+    coverageAreaGeojson: state.coverageArea.geoJson,
   };
 };
 

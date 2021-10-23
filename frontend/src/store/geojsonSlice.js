@@ -9,18 +9,18 @@ const initialState = {
 };
 
 export const fetchGeojsonFromApi = createAsyncThunk(
-  'geospatial/fetchGeoSpatial',
+  'geoJson/fetchgeoJson',
   async (data) => {
     // TODO: HANDLE ERRORS
+    // TODO: LOADING COMPONENT
     const response = await MapApi.uploadKmlFile(data);
     await addTerrainHeightToData(response.data.geoJson.features); // mutating response data
-
     return response.data;
   }
 );
 
-export const geoSpatialSlice = createSlice({
-  name: 'geospatial',
+export const geojsonSlice = createSlice({
+  name: 'geoJson',
   initialState,
   reducers: {
     fetchGeojson: (state, { payload }) => {
