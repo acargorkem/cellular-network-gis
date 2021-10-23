@@ -10,6 +10,8 @@
   opacity: 0.5;
   background-color: #fff;
   z-index: 100 !important;
+
+  /* TODO: OVERFLOW CONTROL ON TOO MANY DATA */
 }
 
 .sidebar.inactive {

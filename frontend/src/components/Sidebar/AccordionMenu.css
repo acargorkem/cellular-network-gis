@@ -1,0 +1,15 @@
+.accordion-title,
+.selector-working-area,
+.selector-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0 0.5em;
+  padding: 0 0.5em;
+}
+
+.selector-label {
+  margin: 0.15em;
+  padding: 0.25em 0;
+  width: 100%;
+}
