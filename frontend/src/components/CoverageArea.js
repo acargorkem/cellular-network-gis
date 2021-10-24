@@ -9,37 +9,40 @@ class CoverageArea extends React.Component {
     super(props);
     this.state = {
       boundsMinus65Dbm: [],
-      distanceMinus65Dbm: 100,
       boundsMinus80Dbm: [],
-      distanceMinus80Dbm: 150,
       boundsMinus100Dbm: [],
-      distanceMinus100Dbm: 200,
     };
   }
 
-  componentDidMount() {}
-
   componentDidUpdate(prevProps) {
-    if (prevProps.coverageAreaGeojson !== this.props.coverageAreaGeojson) {
-      const features = [...this.props.coverageAreaGeojson.features];
-      this.setCoverageAreaBounds(features);
+    if (prevProps !== this.props) {
+      this.setArea();
     }
   }
 
-  setCoverageAreaBounds(features) {
-    let minus65DbmDistance = this.state.distanceMinus65Dbm;
+  setArea() {
+    if (this.props.coverageDistances.length == 0) {
+      return;
+    }
+    const features = [...this.props.coverageAreaGeojson.features];
+    const distances = [...this.props.coverageDistances];
+    this.setCoverageAreaBounds(features, distances);
+  }
+
+  setCoverageAreaBounds(features, distances) {
+    let minus65DbmDistance = distances;
     let minus65DbmPositions = getCoverageAreaBoundsForFeatures(
       features,
       minus65DbmDistance
     );
 
-    let minus80DbmDistance = this.state.distanceMinus80Dbm;
+    let minus80DbmDistance = distances.map((distance) => distance * 1.5);
     let minus80DbmPositions = getCoverageAreaBoundsForFeatures(
       features,
       minus80DbmDistance
     );
 
-    let minus100DbmDistance = this.state.distanceMinus100Dbm;
+    let minus100DbmDistance = distances.map((distance) => distance * 2);
     let minus100DbmPositions = getCoverageAreaBoundsForFeatures(
       features,
       minus100DbmDistance
@@ -106,6 +109,7 @@ class CoverageArea extends React.Component {
 const mapStateToProps = (state) => {
   return {
     coverageAreaGeojson: state.coverageArea.geoJson,
+    coverageDistances: state.coverageArea.distances,
   };
 };
 

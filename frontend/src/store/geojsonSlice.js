@@ -5,6 +5,7 @@ import { addTerrainHeightToData } from '../services/addTerrainHeightToData';
 const initialState = {
   geoJson: null,
   file: null,
+  distances: [],
   loading: false,
 };
 
@@ -26,11 +27,15 @@ export const geojsonSlice = createSlice({
     fetchGeojson: (state, { payload }) => {
       state.geoJson = payload;
     },
+    setDistance: (state, { payload }) => {
+      state.distances[payload.index] = payload.value;
+    },
   },
   extraReducers: {
-    [fetchGeojsonFromApi.fulfilled]: (state, action) => {
-      state.geoJson = action.payload.geoJson;
-      state.file = action.payload.file;
+    [fetchGeojsonFromApi.fulfilled]: (state, { payload }) => {
+      state.geoJson = payload.geoJson;
+      state.file = payload.file;
+      state.distances = new Array(payload.geoJson.features.length).fill(500);
       state.loading = false;
     },
     [fetchGeojsonFromApi.pending]: (state) => {

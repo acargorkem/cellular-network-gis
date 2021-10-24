@@ -32,7 +32,7 @@ export default function AccordionMenu(props) {
               {isActive ? <AiOutlineArrowUp /> : <AiOutlineArrowDown />}
             </div>
           </div>
-          {isActive && <WorkingAreaSelector />}
+          {isActive && <WorkingAreaSelector arrayIndex={props.arrayIndex} />}
         </div>
       </div>
     </React.Fragment>

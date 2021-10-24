@@ -51,9 +51,10 @@ const getHexagonBoundsInCartesian3 = (lonRadian, latRadian, height, radius) => {
   return bounds;
 };
 
-export const getCoverageAreaBoundsForFeatures = (features, distance) => {
+export const getCoverageAreaBoundsForFeatures = (features, distances) => {
   let positions = [];
-  features.forEach((feature) => {
+  features.forEach((feature, index) => {
+    let distance = distances[index] / 2;
     const lon = feature.geometry.coordinates[0];
     const lat = feature.geometry.coordinates[1];
     const height = feature.geometry.coordinates[2];

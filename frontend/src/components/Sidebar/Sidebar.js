@@ -18,7 +18,13 @@ class Sidebar extends React.Component {
     const addAccordionMenus = (data) => {
       if (!data) return;
       return data.features.map((feature, index) => {
-        return <AccordionMenu title={feature.properties.name} key={index} />;
+        return (
+          <AccordionMenu
+            title={feature.properties.name}
+            key={index}
+            arrayIndex={index}
+          />
+        );
       });
     };
 
