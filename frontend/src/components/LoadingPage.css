@@ -1,0 +1,27 @@
+.loading-page-container {
+  min-height: 100vh;
+  position: absolute;
+  display: grid;
+  place-items: center;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  background-color: black;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.loading-spinner {
+  animation: spin infinite 3s linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -6,14 +6,13 @@ const initialState = {
   geoJson: null,
   file: null,
   distances: [],
-  loading: false,
+  isLoading: false,
 };
 
 export const fetchGeojsonFromApi = createAsyncThunk(
   'geoJson/fetchgeoJson',
   async (data) => {
     // TODO: HANDLE ERRORS
-    // TODO: LOADING COMPONENT
     const response = await MapApi.uploadKmlFile(data);
     await addTerrainHeightToData(response.data.geoJson.features); // mutating response data
     return response.data;
@@ -36,10 +35,10 @@ export const geojsonSlice = createSlice({
       state.geoJson = payload.geoJson;
       state.file = payload.file;
       state.distances = new Array(payload.geoJson.features.length).fill(500);
-      state.loading = false;
+      state.isLoading = false;
     },
     [fetchGeojsonFromApi.pending]: (state) => {
-      state.loading = true;
+      state.isLoading = true;
     },
   },
 });
