@@ -65,9 +65,9 @@ const unzip = async (name) => {
 app.post('/file-upload', async (req, res, next) => {
   upload(req, res, async (err) => {
     if (err instanceof multer.MulterError) {
-      return res.status(400).send({ message: err });
+      return res.status(400).send({ errorMessage: err.toString() });
     } else if (err) {
-      return res.status(400).send({ message: err });
+      return res.status(400).send({ errorMessage: err.toString() });
     }
 
     const file = req.file;
@@ -88,6 +88,12 @@ app.post('/file-upload', async (req, res, next) => {
       fs.readFileSync(`uploads/${filePath}`, 'utf8')
     );
     const geoJson = toGeoJson.kml(kml);
+
+    if (geoJson.features.length == 0) {
+      return res.status(400).send({
+        errorMessage: `No features found in the file. Please make sure the file contains feature collection.`,
+      });
+    }
     res.send({ file: file, geoJson: geoJson });
   });
 });

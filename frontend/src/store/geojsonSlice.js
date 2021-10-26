@@ -11,11 +11,14 @@ const initialState = {
 
 export const fetchGeojsonFromApi = createAsyncThunk(
   'geoJson/fetchgeoJson',
-  async (data) => {
-    // TODO: HANDLE ERRORS
-    const response = await MapApi.uploadKmlFile(data);
-    await addTerrainHeightToData(response.data.geoJson.features); // mutating response data
-    return response.data;
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await MapApi.uploadKmlFile(data);
+      await addTerrainHeightToData(response.data.geoJson.features); // mutating response data
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
@@ -39,6 +42,10 @@ export const geojsonSlice = createSlice({
     },
     [fetchGeojsonFromApi.pending]: (state) => {
       state.isLoading = true;
+    },
+    [fetchGeojsonFromApi.rejected]: (state, { payload }) => {
+      alert(payload.errorMessage);
+      state.isLoading = false;
     },
   },
 });
