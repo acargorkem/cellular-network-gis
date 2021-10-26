@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import WorkingAreaSelector from './WorkingAreaSelector';
+import WorkingAreaSelector from '../WorkingAreaSelector';
 import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
 import './AccordionMenu.css';
 

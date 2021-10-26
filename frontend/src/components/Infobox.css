@@ -1,0 +1,20 @@
+.infobox-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25vw;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  background: #1d448d;
+  opacity: 0.9;
+  margin: 50px 20px;
+}
+
+.infobox-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem;
+}

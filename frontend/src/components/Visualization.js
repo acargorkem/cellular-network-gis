@@ -4,13 +4,16 @@ import { GeoJsonDataSource } from 'resium';
 import { Math as CesiumMath, Cartographic } from 'cesium';
 import CoverageArea from './CoverageArea';
 import antennaLogo from '../assets/icons/communications-tower.svg';
+import Infobox from './Infobox';
 
 class Visualization extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isInfoboxActive: false,
+      infoBoxIndex: null,
+    };
   }
-
-  componentDidMount() {}
 
   componentDidUpdate(prevProps) {
     if (prevProps.coverageAreaGeojson !== this.props.coverageAreaGeojson) {
@@ -40,9 +43,32 @@ class Visualization extends React.Component {
       duration: 4,
     });
   }
+
   onLoadHandle(event) {
+    this.changeIcons(event);
+  }
+
+  changeIcons(event) {
     event.entities.values.map((item) => {
       item.billboard.image = antennaLogo;
+      item.billboard.scale = 1.5;
+    });
+  }
+
+  openInfobox(entity) {
+    let id = entity.id.id;
+    let collection = entity.id.entityCollection.values.map((item) => item.id);
+    let index = collection.indexOf(id);
+    this.setState({
+      isInfoboxActive: true,
+      infoBoxIndex: index,
+    });
+  }
+
+  closeInfobox() {
+    console.log(this);
+    this.setState({
+      isInfoboxActive: false,
     });
   }
 
@@ -51,9 +77,16 @@ class Visualization extends React.Component {
       <GeoJsonDataSource
         // TODO: CLUSTER EFFECT- SMALL ICONS ON ZOOM OUT
         data={this.props.coverageAreaGeojson}
-        markerSize={36}
         onLoad={(event) => this.onLoadHandle(event)}
+        onClick={(_, entity) => this.openInfobox(entity)}
       >
+        {this.state.isInfoboxActive && (
+          <Infobox
+            isInfoboxActive={this.state.isInfoboxActive}
+            closeInfobox={this.closeInfobox.bind(this)}
+            arrayIndex={this.state.infoBoxIndex}
+          />
+        )}
         <CoverageArea />
       </GeoJsonDataSource>
     );

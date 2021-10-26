@@ -65,6 +65,7 @@ class Map extends React.Component {
         geocoder={false}
         selectionIndicator={false}
         fullscreenButton={false}
+        infoBox={false}
         ref={(e) => {
           this.viewer = e ? e.cesiumElement : null;
         }}
