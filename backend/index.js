@@ -69,15 +69,12 @@ app.post('/file-upload', async (req, res, next) => {
     } else if (err) {
       return res.status(400).send({ errorMessage: err.toString() });
     }
-
     const file = req.file;
-    let filePath = file.filename;
-
     if (!file) {
-      const error = new Error('Please upload a file');
-      error.httpStatusCode = 400;
-      return next(error);
+      const err = new Error('Please upload a file');
+      return res.status(400).send({ errorMessage: err.toString() });
     }
+    let filePath = file.filename;
 
     if (file.mimetype == 'application/vnd.google-earth.kmz') {
       const unzippedFile = await unzip(file.filename);
