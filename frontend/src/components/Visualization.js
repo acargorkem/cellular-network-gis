@@ -10,19 +10,13 @@ class Visualization extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isFirstDataLoaded: false,
       isInfoboxActive: false,
       infoBoxIndex: null,
     };
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.coverageAreaGeojson !== this.props.coverageAreaGeojson) {
-      const firstCoordsInGeoJson = [
-        ...this.props.coverageAreaGeojson.features[0].geometry.coordinates,
-      ];
-      this.cameraFlyToLoadedData(firstCoordsInGeoJson);
-    }
-  }
+  componentDidUpdate() {}
 
   cartographicToCartesian(cartographicCoords) {
     const longitude = CesiumMath.toRadians(cartographicCoords[0]);
@@ -46,6 +40,16 @@ class Visualization extends React.Component {
 
   onLoadHandle(event) {
     this.changeIcons(event);
+    if (this.state.isFirstDataLoaded) {
+      return;
+    }
+    const firstCoordsInGeoJson = [
+      ...this.props.coverageAreaGeojson.features[0].geometry.coordinates,
+    ];
+    this.cameraFlyToLoadedData(firstCoordsInGeoJson);
+    this.setState({
+      isFirstDataLoaded: true,
+    });
   }
 
   changeIcons(event) {
@@ -56,6 +60,9 @@ class Visualization extends React.Component {
   }
 
   openInfobox(entity) {
+    this.setState({
+      isInfoboxActive: false,
+    });
     let id = entity.id.id;
     let collection = entity.id.entityCollection.values.map((item) => item.id);
     let index = collection.indexOf(id);
@@ -66,7 +73,6 @@ class Visualization extends React.Component {
   }
 
   closeInfobox() {
-    console.log(this);
     this.setState({
       isInfoboxActive: false,
     });
@@ -79,6 +85,7 @@ class Visualization extends React.Component {
         data={this.props.coverageAreaGeojson}
         onLoad={(event) => this.onLoadHandle(event)}
         onClick={(_, entity) => this.openInfobox(entity)}
+        onLoading={this.onLoadingHandle}
       >
         {this.state.isInfoboxActive && (
           <Infobox

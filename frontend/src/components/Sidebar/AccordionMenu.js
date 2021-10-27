@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { geojsonSlice } from '../../store/geojsonSlice';
 import WorkingAreaSelector from '../WorkingAreaSelector';
+import EditableText from '../EditableText';
 import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
 import './AccordionMenu.css';
 
 export default function AccordionMenu(props) {
   const [isActive, setIsActive] = useState(false);
-  const [title, settitle] = useState('');
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    const setStateDataFromProps = () => {
-      if (!props.title) return;
-      settitle(props.title);
-    };
-    setStateDataFromProps();
-  }, [props]);
-
-  //TODO: implement editable title
-  //TODO: add camera icon next to title and handle cameraFlyTo method
+  const editableTextOnChange = (text) => {
+    dispatch(
+      geojsonSlice.actions.setPropertyName({
+        index: props.arrayIndex,
+        name: text,
+      })
+    );
+  };
 
   return (
     <React.Fragment>
@@ -27,7 +28,10 @@ export default function AccordionMenu(props) {
             className="accordion-title"
             onClick={() => setIsActive(!isActive)}
           >
-            {title}
+            <EditableText
+              content={props.title}
+              onChange={editableTextOnChange}
+            />
             <div className={'accordion-button-collapse'}>
               {isActive ? <AiOutlineArrowUp /> : <AiOutlineArrowDown />}
             </div>

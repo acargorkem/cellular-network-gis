@@ -69,9 +69,9 @@ class Map extends React.Component {
         ref={(e) => {
           this.viewer = e ? e.cesiumElement : null;
         }}
-        onMouseMove={(e) => {
-          this.getLocationFromScreenXY(e.endPosition.x, e.endPosition.y);
-        }}
+        // onMouseMove={(e) => {
+        //   this.getLocationFromScreenXY(e.endPosition.x, e.endPosition.y);
+        // }}
       >
         <Camera ref={this.camera} />
         <Visualization getCamera={this.camera} />

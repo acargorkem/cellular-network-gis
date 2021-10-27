@@ -13,8 +13,12 @@
 }
 
 .infobox-button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 0.5rem;
+  margin-left: auto;
+  margin-bottom: auto;
+}
+
+.infobox-title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }

@@ -32,6 +32,14 @@ export const geojsonSlice = createSlice({
     setDistance: (state, { payload }) => {
       state.distances[payload.index] = payload.value;
     },
+    setPropertyName: (state, { payload }) => {
+      let { index, name } = payload;
+      let properties = state.geoJson.features[index].properties;
+      if (!properties) {
+        properties = {};
+      }
+      properties.name = name;
+    },
   },
   extraReducers: {
     [fetchGeojsonFromApi.fulfilled]: (state, { payload }) => {
