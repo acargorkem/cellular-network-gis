@@ -7,6 +7,7 @@ const initialState = {
   file: null,
   distances: [],
   isLoading: false,
+  firstCoords: null,
 };
 
 export const fetchGeojsonFromApi = createAsyncThunk(
@@ -26,9 +27,6 @@ export const geojsonSlice = createSlice({
   name: 'geoJson',
   initialState,
   reducers: {
-    fetchGeojson: (state, { payload }) => {
-      state.geoJson = payload;
-    },
     setDistance: (state, { payload }) => {
       state.distances[payload.index] = payload.value;
     },
@@ -44,6 +42,7 @@ export const geojsonSlice = createSlice({
   extraReducers: {
     [fetchGeojsonFromApi.fulfilled]: (state, { payload }) => {
       state.geoJson = payload.geoJson;
+      state.firstCoords = payload.geoJson.features[0].geometry.coordinates;
       state.file = payload.file;
       state.distances = new Array(payload.geoJson.features.length).fill(500);
       state.isLoading = false;

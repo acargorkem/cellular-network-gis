@@ -1,55 +1,36 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { GeoJsonDataSource } from 'resium';
-import { Math as CesiumMath, Cartographic } from 'cesium';
 import CoverageArea from './CoverageArea';
 import antennaLogo from '../assets/icons/communications-tower.svg';
 import Infobox from './Infobox';
+import { cameraFlyToDestination } from '../services/cameraFlytoCoords';
 
 class Visualization extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isFirstDataLoaded: false,
       isInfoboxActive: false,
       infoBoxIndex: null,
     };
   }
 
-  componentDidUpdate() {}
-
-  cartographicToCartesian(cartographicCoords) {
-    const longitude = CesiumMath.toRadians(cartographicCoords[0]);
-    const latitude = CesiumMath.toRadians(cartographicCoords[1]);
-    const height = cartographicCoords[2];
-
-    const cartographic = new Cartographic(longitude, latitude, height);
-    const cartesian = Cartographic.toCartesian(cartographic);
-    return cartesian;
+  componentDidUpdate(prevProps) {
+    if (prevProps.coverageAreaGeojson !== this.props.coverageAreaGeojson) {
+      if (prevProps.firstCoords !== this.props.firstCoords) {
+        const firstCoords = [...this.props.firstCoords];
+        this.cameraFlyToLoadedData(firstCoords);
+      }
+    }
   }
 
-  cameraFlyToLoadedData(cartographicDestination) {
-    cartographicDestination[2] += 10000;
-    const destination = this.cartographicToCartesian(cartographicDestination);
+  cameraFlyToLoadedData(coords) {
     const camera = this.props.getCamera.current.cesiumElement;
-    camera.flyTo({
-      destination: destination,
-      duration: 4,
-    });
+    cameraFlyToDestination(camera, coords);
   }
 
   onLoadHandle(event) {
     this.changeIcons(event);
-    if (this.state.isFirstDataLoaded) {
-      return;
-    }
-    const firstCoordsInGeoJson = [
-      ...this.props.coverageAreaGeojson.features[0].geometry.coordinates,
-    ];
-    this.cameraFlyToLoadedData(firstCoordsInGeoJson);
-    this.setState({
-      isFirstDataLoaded: true,
-    });
   }
 
   changeIcons(event) {
@@ -85,7 +66,6 @@ class Visualization extends React.Component {
         data={this.props.coverageAreaGeojson}
         onLoad={(event) => this.onLoadHandle(event)}
         onClick={(_, entity) => this.openInfobox(entity)}
-        onLoading={this.onLoadingHandle}
       >
         {this.state.isInfoboxActive && (
           <Infobox
@@ -103,6 +83,7 @@ class Visualization extends React.Component {
 const mapStateToProps = (state) => {
   return {
     coverageAreaGeojson: state.coverageArea.geoJson,
+    firstCoords: state.coverageArea.firstCoords,
   };
 };
 
