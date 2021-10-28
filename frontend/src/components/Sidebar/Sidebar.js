@@ -1,43 +1,39 @@
-import React from 'react';
 import { connect } from 'react-redux';
-import SidebarToggleButton from './SidebarToggleButton';
+import { useState, useEffect } from 'react';
 import FileUpload from './FileUpload';
 import AccordionMenu from './AccordionMenu';
+import SidebarToggleButton from './SidebarToggleButton';
 import './Sidebar.css';
 
-class Sidebar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+function Sidebar({ coverageAreaGeojson, isSidebarShown }) {
+  const [features, setFeatures] = useState([]);
 
-  render() {
-    const toggleStyle = () => {
-      return this.props.isSidebarShown ? 'active' : 'inactive';
-    };
+  useEffect(() => {
+    if (coverageAreaGeojson) {
+      setFeatures(coverageAreaGeojson.features);
+    }
+  }, [coverageAreaGeojson]);
 
-    const addAccordionMenus = (data) => {
-      if (!data) return;
-      return data.features.map((feature, index) => {
-        return (
-          <AccordionMenu
-            title={feature.properties.name}
-            key={index}
-            arrayIndex={index}
-          />
-        );
-      });
-    };
-
-    return (
-      <div className={'sidebar-container'}>
-        <SidebarToggleButton addClass={toggleStyle()} />
-        <div className={`sidebar ${toggleStyle()}`}>
+  return (
+    <>
+      <SidebarToggleButton />
+      {isSidebarShown && (
+        <div className="sidebar-container">
           <FileUpload />
-          {addAccordionMenus(this.props.coverageAreaGeojson)}
+          {features &&
+            features.map((feature, index) => {
+              return (
+                <AccordionMenu
+                  title={feature.properties.name}
+                  key={index}
+                  arrayIndex={index}
+                />
+              );
+            })}
         </div>
-      </div>
-    );
-  }
+      )}
+    </>
+  );
 }
 
 const mapStateToProps = (state) => {

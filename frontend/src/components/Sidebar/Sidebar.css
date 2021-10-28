@@ -1,9 +1,13 @@
-.sidebar {
+:root {
+  --sidebar-width: 400px;
+}
+
+.sidebar-container {
   display: block;
   position: absolute;
   top: 0;
   left: 0;
-  width: 400px;
+  width: var(--sidebar-width);
   height: 100%;
   margin: 0;
   padding: 0;
@@ -13,21 +17,14 @@
   overflow: auto;
 }
 
-.sidebar.inactive {
-  display: none;
-}
-
 .button-sidebar {
   display: block;
-  top: 10;
-  position: fixed;
+  left: 0;
+  top: 0;
+  margin: 10px;
+  position: absolute;
 }
 
 .button-sidebar.active {
-  left: 410px;
-}
-
-.button-sidebar.inactive {
-  display: block;
-  left: 0px;
+  left: var(--sidebar-width);
 }
