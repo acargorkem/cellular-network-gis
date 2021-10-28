@@ -69,6 +69,8 @@ class Map extends React.Component {
         ref={(e) => {
           this.viewer = e ? e.cesiumElement : null;
         }}
+        requestRenderMode={true}
+        maximumRenderTimeChange={Infinity}
         // onMouseMove={(e) => {
         //   this.getLocationFromScreenXY(e.endPosition.x, e.endPosition.y);
         // }}
