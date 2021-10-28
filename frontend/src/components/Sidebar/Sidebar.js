@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import FileUpload from './FileUpload';
 import AccordionMenu from './AccordionMenu';
 import './Sidebar.css';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { MdArrowBackIosNew } from 'react-icons/md';
 
 function Sidebar({ coverageAreaGeojson }) {
   const [isSidebarShown, setIsSidebarShown] = useState(false);
@@ -36,10 +38,18 @@ function Sidebar({ coverageAreaGeojson }) {
 
   return (
     <div className={`sidebar-container ${toggleStyle()}`}>
-      <button
-        className={`button sidebar-button ${toggleStyle()}`}
-        onClick={toggleSidebar}
-      ></button>
+      {!isSidebarShown ? (
+        <GiHamburgerMenu
+          className={`button sidebar-button`}
+          onClick={toggleSidebar}
+        />
+      ) : (
+        <MdArrowBackIosNew
+          className="button sidebar-button active"
+          onClick={toggleSidebar}
+        />
+      )}
+
       {isSidebarShown && (
         <>
           <FileUpload />
