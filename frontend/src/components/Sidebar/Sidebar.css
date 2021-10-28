@@ -17,14 +17,14 @@
   overflow: auto;
 }
 
-.button-sidebar {
+.sidebar-button {
   display: block;
   left: 0;
   top: 0;
-  margin: 10px;
+  z-index: 120 !important;
   position: absolute;
 }
 
-.button-sidebar.active {
-  left: var(--sidebar-width);
+.sidebar-button.active {
+  right: 0;
 }
