@@ -7,7 +7,7 @@
 
 .sidebar-container {
   display: block;
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   width: var(--sidebar-width-close);

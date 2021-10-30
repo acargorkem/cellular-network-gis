@@ -9,6 +9,7 @@ import { MdArrowBackIosNew } from 'react-icons/md';
 function Sidebar({ coverageAreaGeojson }) {
   const [isSidebarShown, setIsSidebarShown] = useState(false);
   const [features, setFeatures] = useState([]);
+  const [isFileUpload, setIsFileUpload] = useState(false);
 
   useEffect(() => {
     if (coverageAreaGeojson) {
@@ -28,6 +29,10 @@ function Sidebar({ coverageAreaGeojson }) {
     });
   };
 
+  const toggleFileUpload = () => {
+    setIsFileUpload(!isFileUpload);
+  };
+
   const toggleSidebar = () => {
     setIsSidebarShown(!isSidebarShown);
   };
@@ -44,15 +49,19 @@ function Sidebar({ coverageAreaGeojson }) {
           onClick={toggleSidebar}
         />
       ) : (
-        <MdArrowBackIosNew
-          className="button sidebar-button active"
-          onClick={toggleSidebar}
-        />
+        <div>
+          <h3> Title </h3>
+          <MdArrowBackIosNew
+            className="button sidebar-button active"
+            onClick={toggleSidebar}
+          />
+        </div>
       )}
 
       {isSidebarShown && (
         <>
-          <FileUpload />
+          <button onClick={toggleFileUpload}> Upload File</button>
+          <FileUpload isOpen={isFileUpload} toggle={toggleFileUpload} />
           {renderAccordionMenu()}
         </>
       )}
