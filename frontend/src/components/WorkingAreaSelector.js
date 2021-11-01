@@ -55,6 +55,8 @@ export default function WorkingAreaSelector(props) {
     <div className="selector-working-area">
       Base station working area
       <Select
+        className="selector"
+        classNamePrefix="selector"
         value={selectedOption}
         onChange={handleChange}
         options={options}

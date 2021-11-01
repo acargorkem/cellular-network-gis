@@ -1,30 +1,74 @@
 :root {
-  --sidebar-width: 400px;
+  --sidebar-width-open: 320px;
+  --sidebar-width-close: 56px;
+  --sidebar-background-color: #2a2b2e;
+  --sidebar-icon-color: rgb(232, 234, 237);
+  --sidebar-text-color: #9aa0a6;
+  --sidebar-title-color: #98989a;
+  --paper-font-common-base_-_font-family: 'Roboto', 'Noto', sans-serif;
 }
 
 .sidebar-container {
-  display: block;
-  position: absolute;
+  display: flex;
+  flex-direction: column;
+  position: relative;
   top: 0;
   left: 0;
-  width: var(--sidebar-width);
+  width: var(--sidebar-width-close);
   height: 100%;
   margin: 0;
   padding: 0;
-  opacity: 0.5;
-  background-color: #fff;
+  background-color: var(--sidebar-background-color);
   z-index: 100 !important;
   overflow: auto;
+  transition: 200ms;
+  transition-timing-function: cubic-bezier(0, 0, 0, 1.27);
+  font-family: var(--paper-font-common-base_-_font-family);
+  color: var(--sidebar-text-color);
+}
+
+.sidebar-container.active {
+  width: var(--sidebar-width-open);
+}
+.sidebar-container.active > div > svg:nth-child(1) {
+  background-color: white;
+}
+
+.sidebar-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+  margin-bottom: 15px;
+}
+
+.sidebar-title svg {
+  margin: 0;
+}
+
+div.sidebar-container.active > button {
+  margin: 0 22px 0 13px;
+  height: 40px;
+  border-radius: 30px;
+  cursor: pointer;
+  margin-bottom: 25px;
+  flex: 0 0 40px;
+}
+button:hover {
+  background-color: var(--sidebar-title-color);
 }
 
 .sidebar-button {
   display: block;
-  left: 0;
-  top: 0;
   z-index: 120 !important;
-  position: absolute;
+  color: var(--sidebar-icon-color);
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  padding: 7px;
+  background-color: transparent;
+  margin: 20px auto;
 }
-
-.sidebar-button.active {
-  right: 0;
+.sidebar-button:hover {
+  background-color: #202124;
 }

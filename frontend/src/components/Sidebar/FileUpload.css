@@ -1,22 +1,44 @@
-.sidebar-dropzone {
-  border: 4px dashed blue;
+.dropzone-container {
+  position: relative;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 12px;
+  height: 40vh;
+  margin: 20vh auto;
+  max-width: 600px;
+  overflow: hidden;
+}
+
+.dropzone-header {
+  display: flex;
+  width: 100%;
+  background-color: var(--sidebar-background-color);
+}
+
+.dropzone-header button {
+  margin-left: auto;
+}
+
+.dropzone-info-area {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.dropzone-info-area > * {
+  padding: 0 0.2rem;
+}
+.dropzone-drop-area {
+  border: 4px dashed var(--sidebar-background-color);
   border-radius: 0.5em;
-  margin: 0.5em;
-  padding: 0.5em;
-  font-size: 2em;
-  font-weight: 600;
-  text-align: center;
-  height: 200px;
+  width: 90%;
+  flex-grow: 1;
+  display: grid;
+  place-items: center;
 }
 
-.sidebar-dropzone-file {
+.dropzone-file {
   font-size: 1.2em;
-}
-
-.accept {
-  border-color: rgb(0, 255, 0);
-}
-
-.reject {
-  border-color: red;
 }

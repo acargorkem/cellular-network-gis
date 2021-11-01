@@ -1,84 +1,70 @@
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { fetchGeojsonFromApi } from '../../store/geojsonSlice';
 import { useDropzone } from 'react-dropzone';
 import './FileUpload.css';
+import { FiUpload } from 'react-icons/fi';
 
-const validTypes = [
-  {
-    mimeType: 'application/vnd.google-earth.kmz',
-    extension: '.kmz',
-  },
-  {
-    mimeType: 'application/vnd.google-earth.kml+xml',
-    extension: '.kml',
-  },
-];
+const allowedExtensions = /(\.kmz|\.kml)$/i;
 
-function FileUpload(props) {
-  const {
-    acceptedFiles,
-    getRootProps,
-    getInputProps,
-    isDragAccept,
-    isDragReject,
-  } = useDropzone({
-    onDrop: (files) => handleFileChange(files[0]),
-    multiple: false,
-    accept: [...validTypes.map((item) => item.mimeType), ''],
-  });
+function FileUpload({ isOpen, toggle, fetchGeojsonFromApi }) {
+  const { acceptedFiles, getRootProps, getInputProps, open, isDragActive } =
+    useDropzone({
+      onDrop: (files) => handleFileChange(files[0]),
+      multiple: false,
+    });
 
   const handleFileChange = (file) => {
     if (!file) return;
-    if (!file.type) {
-      const mimeType = getMimeTypeFromExtension(file);
-      if (!mimeType) {
-        return alert('Not valid file type');
-      }
-      file = new File([file], file.name, { type: mimeType });
+    console.log(file);
+    if (!allowedExtensions.exec(file.name)) {
+      return alert('Only kml and kmz files are accepted!');
     }
+
     const data = new FormData();
     data.append('file', file);
-    props.fetchGeojsonFromApi(data);
-  };
-
-  const getMimeTypeFromExtension = (file) => {
-    const name = file.name;
-    const extension = name.slice(-4);
-    const validType = validTypes.find((item) => item.extension == extension);
-    if (!validType) return;
-    return validType.mimeType;
-  };
-
-  const changeStyle = (accept, reject) => {
-    if (accept) {
-      return 'accept';
-    } else if (reject) {
-      return 'reject';
-    }
-    return '';
+    fetchGeojsonFromApi(data);
+    toggle();
   };
 
   const files = acceptedFiles.map((file) => (
     <li key={file.path}>{file.path}</li>
   ));
 
-  return (
-    <section className="sidebar-dropzone-container">
+  if (!isOpen) {
+    return null;
+  }
+  return ReactDOM.createPortal(
+    <div className="dropzone-container">
+      <div className="dropzone-header">
+        <button onClick={toggle}>Close</button>
+      </div>
+      <div className="dropzone-info-area">
+        <h4>Drag & Drop files or </h4>
+        <button type="button" onClick={open}>
+          <span>Upload File</span>
+          <span>
+            <FiUpload className="upload-icon" />
+          </span>
+        </button>
+      </div>
       <div
         {...getRootProps({
-          className: `sidebar-dropzone ${changeStyle(
-            isDragAccept,
-            isDragReject
-          )}`,
+          className: 'dropzone-drop-area',
         })}
       >
         <input {...getInputProps()} />
-        <p>Drag & drop file, or click to select file</p>
+        {isDragActive ? (
+          <p>Drop your files</p>
+        ) : (
+          <p>Drag & drop some files here, or click to select files</p>
+        )}
       </div>
-      <aside className={'sidebar-dropzone-file'}>
+      <div className={'dropzone-file-accepted'}>
         <ul>{files}</ul>
-      </aside>
-    </section>
+      </div>
+    </div>,
+    document.getElementById('map-content-feature')
   );
 }
 

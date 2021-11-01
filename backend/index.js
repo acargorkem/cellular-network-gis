@@ -17,6 +17,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const allowedExtensions = /(\.kmz|\.kml)$/i;
+
 const getRandomInt = (max) => {
   return Math.floor(Math.random() * max);
 };
@@ -36,10 +38,7 @@ const storage = multer.diskStorage({
 var upload = multer({
   storage: storage,
   fileFilter: (req, file, cb) => {
-    if (
-      file.mimetype == 'application/vnd.google-earth.kmz' ||
-      file.mimetype == 'application/vnd.google-earth.kml+xml'
-    ) {
+    if (allowedExtensions.exec(file.originalname)) {
       cb(null, true);
     } else {
       return cb(new Error('Only .kml and .kmz format allowed!'), false);
@@ -70,14 +69,20 @@ app.post('/file-upload', async (req, res, next) => {
       return res.status(400).send({ errorMessage: err.toString() });
     }
     const file = req.file;
+
     if (!file) {
       const err = new Error('Please upload a file');
       return res.status(400).send({ errorMessage: err.toString() });
     }
     let filePath = file.filename;
 
-    if (file.mimetype == 'application/vnd.google-earth.kmz') {
+    if (file.originalname.endsWith('.kmz')) {
       const unzippedFile = await unzip(file.filename);
+      if (unzippedFile.length == 0) {
+        return res.status(400).send({
+          errorMessage: `Not valid kmz file!`,
+        });
+      }
       filePath = unzippedFile[0].path;
     }
 
