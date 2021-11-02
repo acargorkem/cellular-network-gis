@@ -3,22 +3,22 @@
   padding: 0.2rem;
 }
 
+.editable-text-container .active {
+  border: 0.1rem solid black;
+}
+
 .editable-text-content {
   padding: 0 0.2rem;
   height: 100%;
 }
 
-span {
+.editable-text-container > span {
   overflow-wrap: anywhere;
 }
 
-input:invalid {
+.editable-text-container > input:invalid {
   border: 0.2rem solid red;
   border-radius: 0.25rem;
-}
-
-.active {
-  border: 0.1rem solid black;
 }
 
 .editable-text-button {
