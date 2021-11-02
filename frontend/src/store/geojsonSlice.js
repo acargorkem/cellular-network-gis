@@ -2,8 +2,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import MapApi from '../api/MapApi';
 import { addTerrainHeightToData } from '../services/addTerrainHeightToData';
 
+const initialGeoJson = {
+  type: 'FeatureCollection',
+  features: [],
+};
+
 const initialState = {
-  geoJson: null,
+  geoJson: initialGeoJson,
   file: null,
   distances: [],
   isLoading: false,
