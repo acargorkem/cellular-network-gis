@@ -10,7 +10,7 @@ import {
 } from '../../services/coords';
 import Confirmation from './Confirmation';
 import { useDispatch } from 'react-redux';
-import { addMarker } from '../../store/addMarkerSlice';
+import { addMarker } from '../../store/markerSlice';
 
 function AddMarker({ viewer }) {
   const [isActive, setIsActive] = useState(false);
@@ -75,6 +75,7 @@ function AddMarker({ viewer }) {
 
   const onCancel = () => {
     setConfirmationIsActive(false);
+    viewer.current.cesiumElement.scene.requestRender();
   };
 
   return (

@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { geojsonSlice } from './geojsonSlice';
-import { addMarkerSlice } from './addMarkerSlice';
+import geojsonSliceReducer from './geojsonSlice';
+import markerSliceReducer from './markerSlice';
 
 export const store = configureStore({
   reducer: {
-    coverageArea: geojsonSlice.reducer,
-    markers: addMarkerSlice.reducer,
+    coverageArea: geojsonSliceReducer,
+    markers: markerSliceReducer,
   },
 });
 
