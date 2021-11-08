@@ -10,9 +10,8 @@ import {
   Ion,
   IonResource,
 } from 'cesium';
-
-import Visualization from './Visualization';
 import AddMarker from './AddMarker/AddMarker';
+import VisualizationContainer from './MapVisualization/VisualizationContainer';
 
 Ion.defaultAccessToken = baseConfig.cesiumIonToken;
 
@@ -75,7 +74,7 @@ class Map extends React.Component {
         // }}
       >
         <Camera ref={this.camera} />
-        <Visualization viewer={this.viewer} getCamera={this.camera} />
+        <VisualizationContainer getCamera={this.camera} />
         <AddMarker viewer={this.viewer} />
       </Viewer>
     );
