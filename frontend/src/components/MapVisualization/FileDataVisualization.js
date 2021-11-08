@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Visualization from './Visualization';
 import { cameraFlyToDestination } from '../../services/cameraFlytoCoords';
 
-function FileVisualization(props) {
+function FileDataVisualization(props) {
   useEffect(() => {
     const cameraFlyToLoadedData = (coords) => {
       const camera = props.getCamera.current.cesiumElement;
@@ -17,9 +17,26 @@ function FileVisualization(props) {
     cameraFlyToLoadedData(firstCoords);
   }, [props.data.firstCoords, props.getCamera]);
 
-  return <Visualization data={props.data} />;
+  const setName = (name, index) => {
+    props.setPropertyName({
+      name,
+      index,
+    });
+  };
+
+  const setDistance = (value, index) => {
+    props.setDistance({ value, index });
+  };
+
+  return (
+    <Visualization
+      data={props.data}
+      setName={setName}
+      setDistance={setDistance}
+    />
+  );
 }
 
 const mapDispatchToProps = { setPropertyName, setDistance };
 
-export default connect(null, mapDispatchToProps)(FileVisualization);
+export default connect(null, mapDispatchToProps)(FileDataVisualization);

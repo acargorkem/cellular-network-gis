@@ -1,12 +1,17 @@
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import MarkerVisualization from './MarkerVisualization';
-import FileVisualization from './FileVisualization';
+import FileDataVisualization from './FileDataVisualization';
 
 function VisualizationContainer(props) {
+  useEffect(() => {
+    props.getViewer.current.cesiumElement.scene.requestRender();
+  }, [props]);
+
   return (
     <>
       <MarkerVisualization data={props.markersData} />
-      <FileVisualization
+      <FileDataVisualization
         data={props.coverageAreaData}
         getCamera={props.getCamera}
       />

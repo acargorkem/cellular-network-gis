@@ -74,7 +74,10 @@ class Map extends React.Component {
         // }}
       >
         <Camera ref={this.camera} />
-        <VisualizationContainer getCamera={this.camera} />
+        <VisualizationContainer
+          getCamera={this.camera}
+          getViewer={this.viewer}
+        />
         <AddMarker viewer={this.viewer} />
       </Viewer>
     );
