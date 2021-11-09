@@ -1,4 +1,4 @@
-// import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Select from 'react-select';
 import './WorkingAreaSelector.css';
 
@@ -26,12 +26,18 @@ const options = [
 ];
 
 export default function WorkingAreaSelector(props) {
-  const getInitialValue = () => {
-    return options.find((option) => option.value == props.selectedDistance);
-  };
+  const [selectedValue, setSelectedValue] = useState(null);
+
+  useEffect(() => {
+    const getInitialValue = () => {
+      return options.find((option) => option.value == props.selectedDistance);
+    };
+    setSelectedValue(getInitialValue());
+  }, [props.selectedDistance]);
 
   const handleChange = (selectedOption) => {
     props.setDistance(selectedOption.value, props.arrayIndex);
+    setSelectedValue(selectedOption);
   };
 
   return (
@@ -40,7 +46,8 @@ export default function WorkingAreaSelector(props) {
       <Select
         className="selector"
         classNamePrefix="selector"
-        defaultValue={getInitialValue()}
+        value={selectedValue}
+        defaultValue={selectedValue}
         onChange={handleChange}
         options={options}
       />
