@@ -66,7 +66,6 @@ function AddMarker({ viewer }) {
   };
 
   const onConfirm = (name) => {
-    console.log(name);
     dispatch(addMarker({ coords: confirmationPositions, name }));
     setConfirmationIsActive(false);
 
