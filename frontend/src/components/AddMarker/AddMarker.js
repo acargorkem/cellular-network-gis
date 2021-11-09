@@ -65,8 +65,8 @@ function AddMarker({ viewer }) {
     }
   };
 
-  const onConfirm = (name) => {
-    dispatch(addMarker({ coords: confirmationPositions, name }));
+  const onConfirm = (name, distance) => {
+    dispatch(addMarker({ coords: confirmationPositions, name, distance }));
     setConfirmationIsActive(false);
 
     viewer.current.cesiumElement.scene.requestRender();

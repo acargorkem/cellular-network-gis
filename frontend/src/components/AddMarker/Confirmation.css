@@ -1,6 +1,12 @@
+:root {
+  --confirmation-background-color: #2a2b2e;
+  --confirmation-text-color: #9aa0a6;
+}
+
 .confirmation-container {
   position: relative;
-  background-color: white;
+  background-color: var(--confirmation-background-color);
+  color: var(--confirmation-text-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,19 +14,27 @@
   height: 20vh;
   margin: 20vh auto;
   max-width: 300px;
-  overflow: hidden;
   padding: 10px;
   justify-content: space-between;
+}
+
+.confirmation-context {
+  width: 80%;
 }
 
 .confirmation-context input {
   outline: none;
   border-color: var(--addmarker-active-background);
   border-radius: 0.5rem;
+  width: 100%;
 }
 
 .confirmation-context input:invalid {
   border-color: red;
+}
+
+.confirmation-message-invalid {
+  font-size: 0.75rem;
 }
 
 .confirmation-buttons {
