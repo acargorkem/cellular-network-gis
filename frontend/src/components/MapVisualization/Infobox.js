@@ -1,20 +1,21 @@
 import './Infobox.css';
 import WorkingAreaSelector from './WorkingAreaSelector';
 import EditableText from '../EditableText';
+import { connect } from 'react-redux';
+import { setInfoboxStatus } from '../../store/infoboxSlice';
 
-export default function Infobox(props) {
+function Infobox(props) {
   const closeButtonHandle = () => {
-    props.closeInfobox();
+    props.setInfoboxStatus('inactive');
   };
 
   const editableTextOnChange = (text) => {
     props.setName(text, props.arrayIndex);
   };
 
-  if (!props.isInfoboxActive) {
+  if (props.status == 'inactive') {
     return null;
   }
-
   return (
     <div className="infobox-container">
       <div className="infobox-title">
@@ -41,3 +42,18 @@ export default function Infobox(props) {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    feature: state.infobox.feature,
+    arrayIndex: state.infobox.featureIndex,
+    distance: state.infobox.coverageDistance,
+    status: state.infobox.status,
+  };
+};
+
+const mapDispatchToProps = {
+  setInfoboxStatus,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Infobox);

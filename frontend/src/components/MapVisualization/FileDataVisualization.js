@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 import { setPropertyName, setDistance } from '../../store/geojsonSlice';
+import { setInfoboxStatus, setInfoboxContent } from '../../store/infoboxSlice';
 import { connect } from 'react-redux';
 import Visualization from './Visualization';
 import { cameraFlyToDestination } from '../../services/cameraFlytoCoords';
+import Infobox from './Infobox';
 
 function FileDataVisualization(props) {
   useEffect(() => {
@@ -28,15 +30,40 @@ function FileDataVisualization(props) {
     props.setDistance({ value, index });
   };
 
+  const openInfobox = (content) => {
+    props.setInfoboxContent(content);
+    props.setInfoboxStatus('fileData');
+  };
+
   return (
-    <Visualization
-      data={props.data}
-      setName={setName}
-      setDistance={setDistance}
-    />
+    <>
+      <Visualization
+        data={props.data}
+        setName={setName}
+        setDistance={setDistance}
+        openInfobox={openInfobox}
+      />
+      {props.infoboxStatus == 'fileData' && (
+        <Infobox setDistance={setDistance} setName={setName} />
+      )}
+    </>
   );
 }
 
-const mapDispatchToProps = { setPropertyName, setDistance };
+const mapStateToProps = (state) => {
+  return {
+    infoboxStatus: state.infobox.status,
+  };
+};
 
-export default connect(null, mapDispatchToProps)(FileDataVisualization);
+const mapDispatchToProps = {
+  setPropertyName,
+  setDistance,
+  setInfoboxStatus,
+  setInfoboxContent,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FileDataVisualization);
