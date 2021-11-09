@@ -28,7 +28,7 @@ export const fetchGeojsonFromApi = createAsyncThunk(
   }
 );
 
-export const geojsonSlice = createSlice({
+const geojsonSlice = createSlice({
   name: 'geoJson',
   initialState,
   reducers: {
@@ -61,3 +61,9 @@ export const geojsonSlice = createSlice({
     },
   },
 });
+
+const { actions, reducer } = geojsonSlice;
+
+export const { setDistance, setPropertyName } = actions;
+
+export default reducer;

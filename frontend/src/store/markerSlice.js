@@ -38,10 +38,22 @@ export const addMarker = createAsyncThunk(
   }
 );
 
-export const addMarkerSlice = createSlice({
+export const markerSlice = createSlice({
   name: 'markers',
   initialState,
-  reducers: {},
+  reducers: {
+    setDistance: (state, { payload }) => {
+      state.distances[payload.index] = payload.value;
+    },
+    setPropertyName: (state, { payload }) => {
+      let { index, name } = payload;
+      let properties = state.geoJson.features[index].properties;
+      if (!properties) {
+        properties = {};
+      }
+      properties.name = name;
+    },
+  },
   extraReducers: {
     [addMarker.fulfilled]: (state, { payload }) => {
       const feature = createFeature(payload.name, payload.coordsWithHeight);
@@ -59,3 +71,9 @@ export const addMarkerSlice = createSlice({
     },
   },
 });
+
+const { actions, reducer } = markerSlice;
+
+export const { setDistance, setPropertyName } = actions;
+
+export default reducer;

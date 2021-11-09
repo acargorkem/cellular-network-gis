@@ -16,7 +16,6 @@ function FileUpload({ isOpen, toggle, fetchGeojsonFromApi }) {
 
   const handleFileChange = (file) => {
     if (!file) return;
-    console.log(file);
     if (!allowedExtensions.exec(file.name)) {
       return alert('Only kml and kmz files are accepted!');
     }
