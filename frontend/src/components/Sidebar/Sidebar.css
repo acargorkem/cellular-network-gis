@@ -5,7 +5,6 @@
   --sidebar-icon-color: rgb(232, 234, 237);
   --sidebar-text-color: #9aa0a6;
   --sidebar-title-color: #98989a;
-  --paper-font-common-base_-_font-family: 'Roboto', 'Noto', sans-serif;
 }
 
 .sidebar-container {
@@ -23,7 +22,6 @@
   overflow: auto;
   transition: 200ms;
   transition-timing-function: cubic-bezier(0, 0, 0, 1.27);
-  font-family: var(--paper-font-common-base_-_font-family);
   color: var(--sidebar-text-color);
 }
 

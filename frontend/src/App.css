@@ -1,6 +1,11 @@
+:root {
+  --paper-font-common-base_-_font-family: 'Roboto', 'Noto', sans-serif;
+}
+
 html,
 body {
   overflow: hidden;
   margin: 0;
   box-sizing: border-box;
+  font-family: var(--paper-font-common-base_-_font-family);
 }
