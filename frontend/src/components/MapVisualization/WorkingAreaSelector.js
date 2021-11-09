@@ -42,7 +42,7 @@ export default function WorkingAreaSelector(props) {
 
   return (
     <div className="selector-working-area">
-      Base station working area
+      <div className="selector-text">Base station working area</div>
       <Select
         className="selector"
         classNamePrefix="selector"
@@ -50,6 +50,15 @@ export default function WorkingAreaSelector(props) {
         defaultValue={selectedValue}
         onChange={handleChange}
         options={options}
+        theme={(theme) => ({
+          ...theme,
+          borderRadius: '0.5rem',
+          colors: {
+            ...theme.colors,
+            primary25: '#8ab4f8',
+            primary: '#2a2b2e',
+          },
+        })}
       />
     </div>
   );
