@@ -14,7 +14,7 @@
 .dropzone-header {
   display: flex;
   width: 100%;
-  background-color: var(--sidebar-background-color);
+  background-color: var(--background-color);
 }
 
 .dropzone-header button {
@@ -31,7 +31,7 @@
   padding: 0 0.2rem;
 }
 .dropzone-drop-area {
-  border: 4px dashed var(--sidebar-background-color);
+  border: 4px dashed var(--background-color);
   border-radius: 0.5em;
   width: 90%;
   flex-grow: 1;

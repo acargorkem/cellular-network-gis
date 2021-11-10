@@ -1,10 +1,6 @@
 :root {
   --sidebar-width-open: 320px;
   --sidebar-width-close: 56px;
-  --sidebar-background-color: #2a2b2e;
-  --sidebar-icon-color: rgb(232, 234, 237);
-  --sidebar-text-color: #9aa0a6;
-  --sidebar-title-color: #98989a;
 }
 
 .sidebar-container {
@@ -17,16 +13,16 @@
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: var(--sidebar-background-color);
+  background-color: var(--background-color);
   z-index: 100 !important;
   overflow: auto;
   transition: 200ms;
   transition-timing-function: cubic-bezier(0, 0, 0, 1.27);
-  color: var(--sidebar-text-color);
+  color: var(--text-color);
 }
 
 .sidebar-container.active {
-  width: var(--sidebar-width-open);
+  width: var(--width-open);
 }
 .sidebar-container.active > div > svg:nth-child(1) {
   background-color: white;
@@ -53,13 +49,13 @@ div.sidebar-container.active > button {
   flex: 0 0 40px;
 }
 button:hover {
-  background-color: var(--sidebar-title-color);
+  background-color: var(--title-color);
 }
 
 .sidebar-button {
   display: block;
   z-index: 120 !important;
-  color: var(--sidebar-icon-color);
+  color: var(--icon-color);
   cursor: pointer;
   border: 1px solid transparent;
   border-radius: 50%;
@@ -68,5 +64,5 @@ button:hover {
   margin: 20px auto;
 }
 .sidebar-button:hover {
-  background-color: #202124;
+  background-color: var(--color-active-dark);
 }

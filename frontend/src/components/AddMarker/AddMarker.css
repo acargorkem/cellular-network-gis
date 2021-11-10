@@ -1,18 +1,13 @@
-:root {
-  --addmarker-active-background: #8ab4f8;
-  --addmarker-hover-background: #202124;
-}
-
 .add-marker-wrapper {
   position: absolute;
   top: 0;
   left: 0;
   display: grid;
-  background-color: var(--sidebar-background-color);
+  background-color: var(--background-color);
   color: white;
   margin: 0.125rem;
   padding: 0.125rem;
-  border: 1px solid var(--sidebar-background-color);
+  border: 1px solid var(--background-color);
   border-radius: 50%;
   width: 36px;
   height: 36px;
@@ -21,11 +16,11 @@
 
 .add-marker-wrapper:hover {
   cursor: pointer;
-  background-color: var(--addmarker-hover-background);
+  background-color: var(--color-active-dark);
   transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .add-marker-wrapper.active {
-  background-color: var(--addmarker-active-background);
-  color: var(--sidebar-background-color);
+  background-color: var(--color-active-light);
+  color: var(--background-color);
 }
