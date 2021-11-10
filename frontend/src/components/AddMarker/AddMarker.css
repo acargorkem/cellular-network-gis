@@ -1,0 +1,26 @@
+.add-marker-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  background-color: var(--background-color);
+  color: white;
+  margin: 0.125rem;
+  padding: 0.125rem;
+  border: 1px solid var(--background-color);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+}
+
+.add-marker-wrapper:hover {
+  cursor: pointer;
+  background-color: var(--color-active-dark);
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.add-marker-wrapper.active {
+  background-color: var(--color-active-light);
+  color: var(--background-color);
+}

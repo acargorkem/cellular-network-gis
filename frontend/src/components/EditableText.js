@@ -48,14 +48,20 @@ export default function EditableText(props) {
         <span>{acceptedText}</span>
       )}
 
-      <div className="editable-text-button">
+      <div className="editable-text_button-container">
         {isEditActive ? (
           <>
-            <AiOutlineCheck onClick={acceptEdit} className="active" />
-            <AiOutlineClose onClick={cancelEdit} className="active" />
+            <AiOutlineCheck
+              onClick={acceptEdit}
+              className="editable-text-button active"
+            />
+            <AiOutlineClose
+              onClick={cancelEdit}
+              className="editable-text-button active"
+            />
           </>
         ) : (
-          <AiFillEdit onClick={openEditMenu} />
+          <AiFillEdit className="editable-text-button" onClick={openEditMenu} />
         )}
       </div>
     </div>

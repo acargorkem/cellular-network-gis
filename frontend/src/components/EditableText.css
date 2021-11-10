@@ -1,27 +1,33 @@
 .editable-text-container {
   display: flex;
-  padding: 0.2rem;
+  padding: 0;
+  margin: 0;
 }
 
 .editable-text-content {
   padding: 0 0.2rem;
-  height: 100%;
+  outline: none;
+  border: 0.2rem solid var(--color-active-light);
+  border-radius: 0.5rem;
 }
 
-span {
+.editable-text-container span {
   overflow-wrap: anywhere;
 }
 
-input:invalid {
+.editable-text-container input:invalid {
   border: 0.2rem solid red;
-  border-radius: 0.25rem;
-}
-
-.active {
-  border: 0.1rem solid black;
 }
 
 .editable-text-button {
   margin: 0 0.1rem;
+  cursor: pointer;
   height: 100%;
+  color: var(--icon-color);
+  border-radius: 0.2rem;
+}
+
+.editable-text-button:hover {
+  color: var(--color-active-dark);
+  background-color: var(--color-active-light);
 }

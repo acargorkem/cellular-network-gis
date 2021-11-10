@@ -1,0 +1,48 @@
+.confirmation-container {
+  position: relative;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 12px;
+  height: max(20vh, 175px);
+  margin: 20vh auto;
+  max-width: 300px;
+  padding: 10px;
+  justify-content: space-between;
+}
+
+.confirmation-context {
+  width: 80%;
+}
+
+.confirmation-context input {
+  outline: none;
+  border-color: var(--color-active-light);
+  border-radius: 0.5rem;
+  width: 100%;
+}
+
+.confirmation-context input:invalid {
+  border-color: red;
+}
+
+.confirmation-message-invalid {
+  font-size: 0.75rem;
+}
+
+.confirmation-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.confirmation-icon {
+  margin: 0.2rem;
+  cursor: pointer;
+  border: 1px solid black;
+}
+
+.confirmation-icon:hover {
+  background-color: var(--color-active-light);
+}

@@ -10,8 +10,8 @@ import {
   Ion,
   IonResource,
 } from 'cesium';
-
-import Visualization from './Visualization';
+import AddMarker from './AddMarker/AddMarker';
+import VisualizationContainer from './MapVisualization/VisualizationContainer';
 
 Ion.defaultAccessToken = baseConfig.cesiumIonToken;
 
@@ -22,7 +22,7 @@ export const terrainProvider = new CesiumTerrainProvider({
 class Map extends React.Component {
   constructor(props) {
     super(props);
-    this.cesium = React.createRef();
+    this.viewer = React.createRef();
     this.camera = React.createRef();
     this.state = {
       latitude: 0,
@@ -66,9 +66,7 @@ class Map extends React.Component {
         selectionIndicator={false}
         fullscreenButton={false}
         infoBox={false}
-        ref={(e) => {
-          this.viewer = e ? e.cesiumElement : null;
-        }}
+        ref={this.viewer}
         requestRenderMode={true}
         maximumRenderTimeChange={Infinity}
         // onMouseMove={(e) => {
@@ -76,7 +74,11 @@ class Map extends React.Component {
         // }}
       >
         <Camera ref={this.camera} />
-        <Visualization getCamera={this.camera} />
+        <VisualizationContainer
+          getCamera={this.camera}
+          getViewer={this.viewer}
+        />
+        <AddMarker viewer={this.viewer} />
       </Viewer>
     );
   }
