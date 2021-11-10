@@ -1,24 +1,54 @@
+:root {
+  --infobox-width: 310px;
+  --infobox-height: 400px;
+}
+
 .infobox-container {
   position: absolute;
   top: 0;
   right: 0;
-  width: 25vw;
-  height: 50vh;
+  width: var(--infobox-width);
+  height: var(--infobox-height);
   display: flex;
   flex-direction: column;
   overflow: auto;
-  background: #1d448d;
-  opacity: 0.9;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  opacity: 0.85;
   margin: 50px 20px;
+  border-radius: 8px;
 }
 
 .infobox-button {
+  cursor: pointer;
+  border: 1px solid transparent;
+  padding: 4px;
+  border-radius: 4px;
+  color: var(--icon-color);
+}
+
+.infobox-button:hover {
+  color: black;
+  background-color: var(--color-active-light);
+}
+
+.button-close {
   margin-left: auto;
   margin-bottom: auto;
+  width: 1.3em;
+  height: auto;
 }
 
 .infobox-title {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+}
+
+.infobox-title h3 {
+  padding: 0 0.4rem;
+}
+
+.infobox-content {
+  padding: 0 1.5em 0 0.4rem;
 }

@@ -3,6 +3,7 @@ import WorkingAreaSelector from './WorkingAreaSelector';
 import EditableText from '../EditableText';
 import { connect } from 'react-redux';
 import { setInfoboxStatus } from '../../store/infoboxSlice';
+import { AiOutlineClose } from 'react-icons/ai';
 
 function Infobox(props) {
   const closeButtonHandle = () => {
@@ -25,12 +26,10 @@ function Infobox(props) {
             onChange={editableTextOnChange}
           />
         </h3>
-        <button
+        <AiOutlineClose
           className="infobox-button button-close"
           onClick={closeButtonHandle}
-        >
-          Close
-        </button>
+        />
       </div>
       <div className="infobox-content">
         <WorkingAreaSelector

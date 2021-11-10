@@ -56,7 +56,7 @@ export default function WorkingAreaSelector(props) {
           colors: {
             ...theme.colors,
             primary25: '#8ab4f8',
-            primary: '#2a2b2e',
+            primary: '#202124',
           },
         })}
       />
