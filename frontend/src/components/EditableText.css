@@ -23,7 +23,7 @@
   margin: 0 0.1rem;
   cursor: pointer;
   height: 100%;
-  color: var(--icon-color);
+  color: var(--color-icon);
   border-radius: 0.2rem;
 }
 

@@ -1,8 +1,8 @@
 :root {
-  --background-color: #2a2b2e;
-  --icon-color: rgb(232, 234, 237);
-  --text-color: #9aa0a6;
-  --title-color: #98989a;
+  --color-background: #2a2b2e;
+  --color-icon: rgb(232, 234, 237);
+  --color-text: #9aa0a6;
+  --color-title: #98989a;
   --color-active-light: #8ab4f8;
   --color-active-dark: #202124;
   --paper-font-common-base_-_font-family: 'Roboto', 'Noto', sans-serif;

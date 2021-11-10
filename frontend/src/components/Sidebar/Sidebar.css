@@ -13,12 +13,12 @@
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: var(--background-color);
+  background-color: var(--color-background);
   z-index: 100 !important;
   overflow: auto;
   transition: 200ms;
   transition-timing-function: cubic-bezier(0, 0, 0, 1.27);
-  color: var(--text-color);
+  color: var(--color-text);
 }
 
 .sidebar-container.active {
@@ -49,13 +49,13 @@ div.sidebar-container.active > button {
   flex: 0 0 40px;
 }
 button:hover {
-  background-color: var(--title-color);
+  background-color: var(--color-title);
 }
 
 .sidebar-button {
   display: block;
   z-index: 120 !important;
-  color: var(--icon-color);
+  color: var(--color-icon);
   cursor: pointer;
   border: 1px solid transparent;
   border-radius: 50%;
