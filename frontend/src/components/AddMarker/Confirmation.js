@@ -39,14 +39,14 @@ export default function Confirmation({ onConfirm, onCancel }) {
       <div className="confirmation-context">
         <input
           required
-          pattern=".{2,30}"
+          pattern=".{1,30}"
           placeholder="Marker Name"
           onBlur={onBlurHandle}
           onChange={onChangeHandle}
         ></input>
         {!isValid && (
           <div className="confirmation-message-invalid">
-            *Marker name is required and it must be at least 2 characters.
+            *Marker name is required.
           </div>
         )}
       </div>

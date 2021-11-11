@@ -1,12 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { connect } from 'react-redux';
 import MarkerVisualization from './MarkerVisualization';
 import FileDataVisualization from './FileDataVisualization';
+import { CesiumContext } from 'resium';
 
 function VisualizationContainer(props) {
+  const cesiumContext = useContext(CesiumContext);
+
   useEffect(() => {
-    props.getViewer.current.cesiumElement.scene.requestRender();
-  }, [props]);
+    cesiumContext.scene.requestRender();
+  }, [props, cesiumContext]);
 
   return (
     <>
@@ -17,7 +20,6 @@ function VisualizationContainer(props) {
       <FileDataVisualization
         opacity={props.coverageOpacity}
         data={props.coverageAreaData}
-        getCamera={props.getCamera}
       />
     </>
   );

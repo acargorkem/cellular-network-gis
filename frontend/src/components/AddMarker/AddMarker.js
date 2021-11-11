@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import './AddMarker.css';
 import { RiMapPinAddLine } from 'react-icons/ri';
 import { ScreenSpaceEventHandler, ScreenSpaceEvent } from 'resium';
@@ -11,30 +11,37 @@ import {
 import Confirmation from './Confirmation';
 import { useDispatch } from 'react-redux';
 import { addMarker } from '../../store/markerSlice';
+import { CesiumContext } from 'resium';
 
-function AddMarker({ viewer }) {
+function AddMarker() {
   const [isActive, setIsActive] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState(null);
   const [confirmationPositions, setConfirmationPositions] = useState([]);
   const [confirmationIsActive, setConfirmationIsActive] = useState(false);
   const dispatch = useDispatch();
+  const cesiumContext = useContext(CesiumContext);
+
+  useEffect(() => {
+    cesiumContext.scene.requestRender();
+  }, [
+    cesiumContext,
+    tooltipPosition,
+    confirmationPositions,
+    confirmationIsActive,
+  ]);
 
   const toggleIsActive = () => {
     setIsActive(!isActive);
     setConfirmationIsActive(false);
-    viewer.current.cesiumElement.scene.requestRender();
   };
 
   const addMarkerAction = ({ position }) => {
-    const cartesian3 = getCartesian3FromScreen(
-      viewer.current.cesiumElement,
-      position
-    );
+    const cartesian3 = getCartesian3FromScreen(cesiumContext.scene, position);
     if (!cartesian3) {
       return;
     }
     const cartographic = getCartopgraphicFromCartesian3(
-      viewer.current.cesiumElement,
+      cesiumContext.scene,
       cartesian3
     );
     setConfirmationPositions(cartographic);
@@ -44,23 +51,19 @@ function AddMarker({ viewer }) {
 
   const showTooltipAction = (movement) => {
     let position = movement.endPosition;
-    const cartesian3 = getCartesian3FromScreen(
-      viewer.current.cesiumElement,
-      position
-    );
+    const cartesian3 = getCartesian3FromScreen(cesiumContext.scene, position);
     if (!cartesian3) {
       return;
     }
     setTooltipPosition(cartesian3);
-    viewer.current.cesiumElement.scene.requestRender();
   };
 
   const toggleStyle = () => {
     if (isActive) {
-      viewer.current.cesiumElement.canvas.style.cursor = 'crosshair';
+      cesiumContext.viewer.canvas.style.cursor = 'crosshair';
       return 'active';
     } else {
-      viewer.current.cesiumElement.canvas.style.cursor = '';
+      cesiumContext.viewer.canvas.style.cursor = '';
       return '';
     }
   };
@@ -68,13 +71,10 @@ function AddMarker({ viewer }) {
   const onConfirm = (name, distance) => {
     dispatch(addMarker({ coords: confirmationPositions, name, distance }));
     setConfirmationIsActive(false);
-
-    viewer.current.cesiumElement.scene.requestRender();
   };
 
   const onCancel = () => {
     setConfirmationIsActive(false);
-    viewer.current.cesiumElement.scene.requestRender();
   };
 
   return (
