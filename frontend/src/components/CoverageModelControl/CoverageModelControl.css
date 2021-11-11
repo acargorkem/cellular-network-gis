@@ -5,7 +5,7 @@
   align-items: center;
   border: 2px solid var(--color-icon);
   border-radius: 10px;
-  padding: 0 0.5rem;
+  padding: 0.5rem;
 }
 
 .control-model-title {

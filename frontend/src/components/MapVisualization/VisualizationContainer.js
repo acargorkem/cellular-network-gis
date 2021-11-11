@@ -10,8 +10,12 @@ function VisualizationContainer(props) {
 
   return (
     <>
-      <MarkerVisualization data={props.markersData} />
+      <MarkerVisualization
+        data={props.markersData}
+        opacity={props.coverageOpacity}
+      />
       <FileDataVisualization
+        opacity={props.coverageOpacity}
         data={props.coverageAreaData}
         getCamera={props.getCamera}
       />
@@ -24,6 +28,7 @@ const mapStateToProps = (state) => {
     coverageAreaData: state.coverageArea,
     firstCoords: state.coverageArea.firstCoords,
     markersData: state.markers,
+    coverageOpacity: state.coverageControl.opacity,
   };
 };
 

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { setPropertyName, setDistance } from '../../store/geojsonSlice';
 import { setInfoboxStatus, setInfoboxContent } from '../../store/infoboxSlice';
 import { connect } from 'react-redux';
-import Visualization from './Visualization';
+import CoverageDataVisualization from './CoverageDataVisualization';
 import { cameraFlyToDestination } from '../../services/cameraFlytoCoords';
 import Infobox from './Infobox';
 
@@ -37,11 +37,12 @@ function FileDataVisualization(props) {
 
   return (
     <>
-      <Visualization
+      <CoverageDataVisualization
         data={props.data}
         setName={setName}
         setDistance={setDistance}
         openInfobox={openInfobox}
+        opacity={props.opacity}
       />
       {props.infoboxStatus == 'fileData' && (
         <Infobox setDistance={setDistance} setName={setName} />

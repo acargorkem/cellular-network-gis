@@ -62,6 +62,7 @@
 .upload-file-button {
   height: 40px;
   width: 100%;
+  border: 0;
   border-radius: 30px;
   cursor: pointer;
 }
