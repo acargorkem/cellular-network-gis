@@ -10,6 +10,7 @@ const initialState = {
   geoJson: initialGeoJson,
   distances: [],
   isLoading: false,
+  isAddMarkerActive: false,
 };
 
 const createFeature = (name, coords) => {
@@ -53,6 +54,12 @@ export const markerSlice = createSlice({
       }
       properties.name = name;
     },
+    toggleIsAddMarkerActive: (state) => {
+      state.isAddMarkerActive = !state.isAddMarkerActive;
+    },
+    setIsAddMarkerActive: (state, { payload }) => {
+      state.isAddMarkerActive = payload;
+    },
   },
   extraReducers: {
     [addMarker.fulfilled]: (state, { payload }) => {
@@ -74,6 +81,11 @@ export const markerSlice = createSlice({
 
 const { actions, reducer } = markerSlice;
 
-export const { setDistance, setPropertyName } = actions;
+export const {
+  setDistance,
+  setPropertyName,
+  toggleIsAddMarkerActive,
+  setIsAddMarkerActive,
+} = actions;
 
 export default reducer;

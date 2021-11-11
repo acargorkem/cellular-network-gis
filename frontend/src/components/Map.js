@@ -3,7 +3,7 @@ import './Map.css';
 import baseConfig from '../config';
 import { Viewer } from 'resium';
 import { CesiumTerrainProvider, Ion, IonResource } from 'cesium';
-import AddMarker from './AddMarker/AddMarker';
+import AddMarkerContainer from './AddMarker/AddMarkerContainer';
 import VisualizationContainer from './MapVisualization/VisualizationContainer';
 
 Ion.defaultAccessToken = baseConfig.cesiumIonToken;
@@ -35,7 +35,7 @@ class Map extends React.Component {
         maximumRenderTimeChange={Infinity}
       >
         <VisualizationContainer />
-        <AddMarker />
+        <AddMarkerContainer />
       </Viewer>
     );
   }

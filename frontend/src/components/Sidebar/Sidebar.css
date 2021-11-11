@@ -36,7 +36,7 @@
 }
 
 .sidebar-item > * {
-  margin: 0.5rem 0;
+  margin: 1rem 0;
 }
 
 .sidebar-title > svg:nth-child(1) {
@@ -48,7 +48,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 0;
-  margin: 15px 0;
+  margin: 0;
+  margin-top: 0.5rem;
 }
 
 .sidebar-title h3 {
@@ -59,12 +60,22 @@
   margin: 0;
 }
 
-.upload-file-button {
+.sidebar-item-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 20px;
+}
+
+.sidebar-item-buttons > * {
   height: 40px;
-  width: 100%;
   border: 0;
   border-radius: 30px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: space-evenly;
 }
 
 .sidebar-button {
@@ -80,4 +91,9 @@
 }
 .sidebar-button:hover {
   background-color: var(--color-active-dark);
+}
+
+.sidebar-item-buttons > button.active {
+  background-color: var(--color-active-light);
+  color: var(--color-background);
 }

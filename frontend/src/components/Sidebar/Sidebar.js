@@ -6,7 +6,10 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdArrowBackIosNew } from 'react-icons/md';
 import { ReactComponent as CommTowerIcon } from '../../assets/icons/communications-tower.svg';
 import CoverageModelControl from '../CoverageModelControl/CoverageModelControl';
+import AddMarkerToggleButton from '../AddMarker/AddMarkerToggleButton';
+import { FiUpload } from 'react-icons/fi';
 
+//TODO:REFACTOR : make component from fileupload toggle logic
 function Sidebar(props) {
   const [isSidebarShown, setIsSidebarShown] = useState(false);
   const [isFileUpload, setIsFileUpload] = useState(false);
@@ -21,6 +24,10 @@ function Sidebar(props) {
 
   const toggleStyle = () => {
     return isSidebarShown ? 'active' : '';
+  };
+
+  const toggleFileUploadStyle = () => {
+    return isFileUpload ? 'active' : '';
   };
 
   return (
@@ -41,9 +48,16 @@ function Sidebar(props) {
             />
           </div>
           <div className="sidebar-item">
-            <button className="upload-file-button" onClick={toggleFileUpload}>
-              Upload File
-            </button>
+            <div className="sidebar-item-buttons">
+              <button
+                className={toggleFileUploadStyle()}
+                onClick={toggleFileUpload}
+              >
+                Upload File
+                <FiUpload size="1.6em" />
+              </button>
+              <AddMarkerToggleButton />
+            </div>
             <FileUpload isOpen={isFileUpload} toggle={toggleFileUpload} />
             <CoverageModelControl data={props.coverageAreaFile} />
           </div>
