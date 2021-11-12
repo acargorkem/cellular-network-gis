@@ -7,8 +7,12 @@ export default function CoverageArea(props) {
   const [boundsStrongest, setBoundsStrongest] = useState([]);
   const [boundsMedium, setBoundsMedium] = useState([]);
   const [boundsWeakest, setBoundsWeakest] = useState([]);
+  const [opacity, setOpacity] = useState(0.5);
 
   useEffect(() => {
+    if (props.opacity >= 0) {
+      setOpacity(props.opacity);
+    }
     if (props.distances.length == 0) {
       return;
     }
@@ -34,17 +38,17 @@ export default function CoverageArea(props) {
   const polygonOptions = {
     strongest: {
       name: '-65 dBm',
-      material: Color.fromCssColorString('#70be2d').withAlpha(0.5),
+      material: Color.fromCssColorString('rgb(0, 255, 0)').withAlpha(opacity),
       zIndex: 3,
     },
     medium: {
       name: '-80 dBm',
-      material: Color.fromCssColorString('#ffe300').withAlpha(0.5),
+      material: Color.fromCssColorString('rgb(255, 227, 0)').withAlpha(opacity),
       zIndex: 2,
     },
     weakest: {
       name: '-100 dBm',
-      material: Color.fromCssColorString('#ff380f').withAlpha(0.5),
+      material: Color.fromCssColorString('rgb(255, 0, 0)').withAlpha(opacity),
       zIndex: 1,
     },
   };

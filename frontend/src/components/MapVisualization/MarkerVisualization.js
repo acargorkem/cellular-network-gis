@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { setPropertyName, setDistance } from '../../store/markerSlice';
 import { setInfoboxStatus, setInfoboxContent } from '../../store/infoboxSlice';
-import Visualization from './Visualization';
+import CoverageDataVisualization from './CoverageDataVisualization';
 import Infobox from './Infobox';
 
 function MarkerVisualization(props) {
@@ -23,11 +23,12 @@ function MarkerVisualization(props) {
 
   return (
     <>
-      <Visualization
+      <CoverageDataVisualization
         data={props.data}
         setName={setName}
         setDistance={setDistance}
         openInfobox={openInfobox}
+        opacity={props.opacity}
       />
       {props.infoboxStatus == 'markerData' && (
         <Infobox setDistance={setDistance} setName={setName} />

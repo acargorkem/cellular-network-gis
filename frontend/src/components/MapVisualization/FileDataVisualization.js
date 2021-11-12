@@ -1,15 +1,18 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { setPropertyName, setDistance } from '../../store/geojsonSlice';
 import { setInfoboxStatus, setInfoboxContent } from '../../store/infoboxSlice';
 import { connect } from 'react-redux';
-import Visualization from './Visualization';
+import CoverageDataVisualization from './CoverageDataVisualization';
 import { cameraFlyToDestination } from '../../services/cameraFlytoCoords';
 import Infobox from './Infobox';
+import { CesiumContext } from 'resium';
 
 function FileDataVisualization(props) {
+  const cesiumContext = useContext(CesiumContext);
+
   useEffect(() => {
     const cameraFlyToLoadedData = (coords) => {
-      const camera = props.getCamera.current.cesiumElement;
+      const camera = cesiumContext.camera;
       cameraFlyToDestination(camera, coords);
     };
     if (!props.data.firstCoords) {
@@ -17,7 +20,7 @@ function FileDataVisualization(props) {
     }
     const firstCoords = [...props.data.firstCoords];
     cameraFlyToLoadedData(firstCoords);
-  }, [props.data.firstCoords, props.getCamera]);
+  }, [props.data.firstCoords, cesiumContext.camera]);
 
   const setName = (name, index) => {
     props.setPropertyName({
@@ -37,11 +40,12 @@ function FileDataVisualization(props) {
 
   return (
     <>
-      <Visualization
+      <CoverageDataVisualization
         data={props.data}
         setName={setName}
         setDistance={setDistance}
         openInfobox={openInfobox}
+        opacity={props.opacity}
       />
       {props.infoboxStatus == 'fileData' && (
         <Infobox setDistance={setDistance} setName={setName} />

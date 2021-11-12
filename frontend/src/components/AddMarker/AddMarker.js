@@ -1,6 +1,4 @@
-import { useState } from 'react';
-import './AddMarker.css';
-import { RiMapPinAddLine } from 'react-icons/ri';
+import { useState, useContext, useEffect } from 'react';
 import { ScreenSpaceEventHandler, ScreenSpaceEvent } from 'resium';
 import { ScreenSpaceEventType } from 'cesium';
 import CesiumTooltip from '../CesiumTooltip';
@@ -9,85 +7,74 @@ import {
   getCartopgraphicFromCartesian3,
 } from '../../services/coords';
 import Confirmation from './Confirmation';
-import { useDispatch } from 'react-redux';
-import { addMarker } from '../../store/markerSlice';
+import { CesiumContext } from 'resium';
 
-function AddMarker({ viewer }) {
-  const [isActive, setIsActive] = useState(false);
+function AddMarker(props) {
   const [tooltipPosition, setTooltipPosition] = useState(null);
   const [confirmationPositions, setConfirmationPositions] = useState([]);
   const [confirmationIsActive, setConfirmationIsActive] = useState(false);
-  const dispatch = useDispatch();
+  const cesiumContext = useContext(CesiumContext);
 
-  const toggleIsActive = () => {
-    setIsActive(!isActive);
-    setConfirmationIsActive(false);
-    viewer.current.cesiumElement.scene.requestRender();
-  };
+  useEffect(() => {
+    cesiumContext.scene.requestRender();
+  }, [
+    cesiumContext,
+    tooltipPosition,
+    confirmationPositions,
+    confirmationIsActive,
+  ]);
+
+  useEffect(() => {
+    cesiumContext.scene.canvas.style.cursor = 'crosshair';
+    return () => {
+      cesiumContext.scene.canvas.style.cursor = '';
+    };
+  }, [cesiumContext.scene.canvas.style]);
 
   const addMarkerAction = ({ position }) => {
-    const cartesian3 = getCartesian3FromScreen(
-      viewer.current.cesiumElement,
-      position
-    );
+    const cartesian3 = getCartesian3FromScreen(cesiumContext.scene, position);
     if (!cartesian3) {
       return;
     }
     const cartographic = getCartopgraphicFromCartesian3(
-      viewer.current.cesiumElement,
+      cesiumContext.scene,
       cartesian3
     );
     setConfirmationPositions(cartographic);
-    setIsActive(false);
     setConfirmationIsActive(true);
   };
 
   const showTooltipAction = (movement) => {
     let position = movement.endPosition;
-    const cartesian3 = getCartesian3FromScreen(
-      viewer.current.cesiumElement,
-      position
-    );
+    const cartesian3 = getCartesian3FromScreen(cesiumContext.scene, position);
     if (!cartesian3) {
       return;
     }
     setTooltipPosition(cartesian3);
-    viewer.current.cesiumElement.scene.requestRender();
-  };
-
-  const toggleStyle = () => {
-    if (isActive) {
-      viewer.current.cesiumElement.canvas.style.cursor = 'crosshair';
-      return 'active';
-    } else {
-      viewer.current.cesiumElement.canvas.style.cursor = '';
-      return '';
-    }
   };
 
   const onConfirm = (name, distance) => {
-    dispatch(addMarker({ coords: confirmationPositions, name, distance }));
+    props.addMarker({ coords: confirmationPositions, name, distance });
     setConfirmationIsActive(false);
-
-    viewer.current.cesiumElement.scene.requestRender();
+    props.close();
   };
 
   const onCancel = () => {
     setConfirmationIsActive(false);
-    viewer.current.cesiumElement.scene.requestRender();
+    props.close();
   };
 
   return (
     <>
-      <div className={`add-marker-wrapper ${toggleStyle()}`}>
-        <RiMapPinAddLine
-          className="add-marker-icon"
-          onClick={toggleIsActive}
-          size="1.6em"
+      {confirmationIsActive ? (
+        <Confirmation
+          latitude={confirmationPositions.latitude}
+          longitude={confirmationPositions.longitude}
+          height={confirmationPositions.height}
+          onConfirm={onConfirm}
+          onCancel={onCancel}
         />
-      </div>
-
-      {isActive && (
+      ) : (
         <ScreenSpaceEventHandler>
           <ScreenSpaceEvent
             action={addMarkerAction}
@@ -100,16 +87,8 @@ function AddMarker({ viewer }) {
           <CesiumTooltip text="Select a location" position={tooltipPosition} />
         </ScreenSpaceEventHandler>
       )}
-      {confirmationIsActive && (
-        <Confirmation
-          latitude={confirmationPositions.latitude}
-          longitude={confirmationPositions.longitude}
-          height={confirmationPositions.height}
-          onConfirm={onConfirm}
-          onCancel={onCancel}
-        />
-      )}
     </>
   );
 }
+
 export default AddMarker;

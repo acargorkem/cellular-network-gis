@@ -1,0 +1,18 @@
+.color-control-items {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 20px auto;
+  column-gap: 0.5rem;
+  row-gap: 0.5rem;
+}
+.color-control-colorbox {
+  height: 15px;
+  width: 15px;
+  border: 2px solid black;
+  grid-column: 1;
+}
+
+.color-control-label {
+  font-size: 12px;
+  grid-column: 2 / 3;
+}

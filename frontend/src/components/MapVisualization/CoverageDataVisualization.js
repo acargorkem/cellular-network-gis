@@ -2,7 +2,7 @@ import { GeoJsonDataSource } from 'resium';
 import CoverageArea from './CoverageArea';
 import antennaLogo from '../../assets/icons/communications-tower.svg';
 
-export default function Visualization(props) {
+export default function CoverageDataVisualization(props) {
   const onLoadHandle = (loadEvent) => {
     changeIcons(loadEvent);
   };
@@ -34,6 +34,7 @@ export default function Visualization(props) {
       <CoverageArea
         distances={props.data.distances}
         features={props.data.geoJson.features}
+        opacity={props.opacity}
       />
     </>
   );

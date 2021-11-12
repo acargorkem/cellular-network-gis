@@ -1,16 +1,14 @@
 import { sampleTerrainMostDetailed, Math as CesiumMath } from 'cesium';
 import { terrainProvider } from '../components/Map';
 
-export const getCartesian3FromScreen = (viewer, position) => {
-  const scene = viewer.scene;
+export const getCartesian3FromScreen = (scene, position) => {
   if (!scene) return;
   const ellipsoid = scene.globe.ellipsoid;
   const cartesian3 = scene.camera.pickEllipsoid(position, ellipsoid);
   return cartesian3;
 };
 
-export const getCartopgraphicFromCartesian3 = (viewer, cartesian) => {
-  const scene = viewer.scene;
+export const getCartopgraphicFromCartesian3 = (scene, cartesian) => {
   if (!scene) return;
   const ellipsoid = scene.globe.ellipsoid;
   return ellipsoid.cartesianArrayToCartographicArray([cartesian]);
