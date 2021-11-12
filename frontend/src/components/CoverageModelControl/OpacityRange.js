@@ -13,7 +13,7 @@ function OpacityRange(props) {
 
   return (
     <div className="opacity-range-container">
-      <span>Opacity:%{value}</span>
+      <span>Opacity : {value}%</span>
       <input type="range" onChange={onChange}></input>
     </div>
   );

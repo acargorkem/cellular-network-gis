@@ -15,6 +15,11 @@
 .control-model-title h4 {
   margin: 0.2rem;
 }
-.control-model-control {
+
+.control-model-items {
   width: 100%;
+}
+
+.control-model-items > * {
+  margin: 0.4rem 0;
 }

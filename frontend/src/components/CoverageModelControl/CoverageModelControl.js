@@ -8,7 +8,7 @@ function DataInfo() {
       <div className="control-model-title">
         <h4>Coverage Area Model</h4>
       </div>
-      <div className="control-model-control">
+      <div className="control-model-items">
         <ColorModelControl />
         <OpacityRange />
       </div>
