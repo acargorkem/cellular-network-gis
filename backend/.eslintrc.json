@@ -26,6 +26,8 @@
     "node/prefer-global/url": ["error", "always"],
     "node/prefer-promises/dns": "error",
     "node/prefer-promises/fs": "error",
-    "linebreak-style": 0
+    "linebreak-style": 0,
+    "no-console": 0,
+    "no-param-reassign": [2, { "props": false }]
   }
 }
