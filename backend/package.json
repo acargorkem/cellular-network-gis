@@ -1,8 +1,8 @@
 {
-  "name": "em-waves-propagation-visualization",
-  "version": "1.0.0",
-  "description": "",
+  "name": "cellular-network-gis-backend",
+  "version": "0.1.0",
   "main": "index.js",
+  "private": true,
   "dependencies": {
     "@tmcw/togeojson": "^4.5.0",
     "adm-zip": "^0.5.9",

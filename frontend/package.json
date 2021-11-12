@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "cellular-network-gis-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -31,6 +31,8 @@
     "test": "craco test",
     "eject": "react-scripts eject"
   },
+  "author": "Görkem Acar",
+  "license": "MIT",
   "eslintConfig": {
     "extends": [
       "react-app",

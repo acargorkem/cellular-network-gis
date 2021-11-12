@@ -1,8 +1,8 @@
 {
   "name": "cellular-network-gis",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "Cellular Communication GIS application",
+  "private": true,
   "scripts": {
     "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\" "
   },
