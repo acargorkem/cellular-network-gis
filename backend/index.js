@@ -2,11 +2,10 @@ const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
 const multer = require('multer');
-const decompress = require('decompress');
 
 const toGeoJson = require('@tmcw/togeojson');
-const fs = require('fs');
-const DOMParser = require('xmldom').DOMParser;
+const { DOMParser } = require('xmldom');
+const AdmZip = require('adm-zip');
 
 const port = process.env.PORT || 5000;
 const app = express();
@@ -19,84 +18,69 @@ app.use(express.urlencoded({ extended: true }));
 
 const allowedExtensions = /(\.kmz|\.kml)$/i;
 
-const getRandomInt = (max) => {
-  return Math.floor(Math.random() * max);
-};
+const storage = multer.memoryStorage();
 
-const storage = multer.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, 'uploads');
-  },
-  filename: (req, file, callback) => {
-    let unixTimeStamp = Date.now();
-    let randomNumber = getRandomInt(9999);
-    let extension = file.originalname.slice(-3);
-    callback(null, `${unixTimeStamp}_${randomNumber}.${extension}`);
-  },
-});
-
-var upload = multer({
-  storage: storage,
+const upload = multer({
+  storage,
   fileFilter: (req, file, cb) => {
     if (allowedExtensions.exec(file.originalname)) {
-      cb(null, true);
-    } else {
-      return cb(new Error('Only .kml and .kmz format allowed!'), false);
+      return cb(null, true);
     }
+    return cb(new Error('Only .kml and .kmz format allowed!'), false);
   },
 }).single('file');
 
-const unzip = async (name) => {
+const unzip = (zipFileBuffer) => {
   try {
-    const files = await decompress(`uploads/${name}`, 'uploads', {
-      map: (file) => {
-        const fileName = name.slice(0, -4);
-        file.path = fileName + file.path.slice(-4);
-        return file;
-      },
-    });
-    return files;
-  } catch (err) {
-    return console.error(err);
+    const zip = new AdmZip(zipFileBuffer);
+    const entries = zip.getEntries();
+    const kmlEntry = entries.find((entry) => entry.entryName.endsWith('.kml'));
+    return kmlEntry.getData().toString('utf-8');
+  } catch (e) {
+    return null;
   }
 };
 
-app.post('/file-upload', async (req, res, next) => {
+app.post('/file-upload', async (req, res) => {
   upload(req, res, async (err) => {
     if (err instanceof multer.MulterError) {
       return res.status(400).send({ errorMessage: err.toString() });
-    } else if (err) {
+    }
+    if (err) {
       return res.status(400).send({ errorMessage: err.toString() });
     }
-    const file = req.file;
-
+    const { file } = req;
     if (!file) {
-      const err = new Error('Please upload a file');
-      return res.status(400).send({ errorMessage: err.toString() });
+      const error = new Error('Please upload a file');
+      return res.status(400).send({ errorMessage: error.toString() });
     }
-    let filePath = file.filename;
 
+    let fileString;
     if (file.originalname.endsWith('.kmz')) {
-      const unzippedFile = await unzip(file.filename);
-      if (unzippedFile.length == 0) {
+      fileString = unzip(file.buffer);
+      if (!fileString) {
         return res.status(400).send({
-          errorMessage: `Not valid kmz file!`,
+          errorMessage: 'Not valid kmz file!',
         });
       }
-      filePath = unzippedFile[0].path;
+    } else {
+      fileString = file.buffer.toString('utf-8');
+      if (!fileString) {
+        return res.status(400).send({
+          errorMessage: 'Not valid kml file!',
+        });
+      }
     }
-
-    const kml = new DOMParser().parseFromString(
-      fs.readFileSync(`uploads/${filePath}`, 'utf8')
-    );
+    const kml = new DOMParser().parseFromString(fileString);
     const geoJson = toGeoJson.kml(kml);
-
-    if (geoJson.features.length == 0) {
+    if (geoJson.features.length === 0) {
       return res.status(400).send({
-        errorMessage: `No features found in the file. Please make sure the file contains feature collection.`,
+        errorMessage:
+          'No features found in the file. Please make sure the file contains feature collection.',
       });
     }
-    res.send({ file: file, geoJson: geoJson });
+    delete file.buffer;
+    return res.send({ file, geoJson });
   });
 });
 
