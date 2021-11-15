@@ -1,3 +1,6 @@
+const CracoCesiumPlugin = require('craco-cesium');
+const CracoPluginReactHotReload = require('craco-plugin-react-hot-reload');
+
 module.exports = {
   webpack: {
     alias: {
@@ -5,7 +8,13 @@ module.exports = {
     },
   },
   plugins: [
-    { plugin: require('craco-plugin-react-hot-reload') },
-    { plugin: require('craco-cesium')() },
+    { plugin: CracoPluginReactHotReload },
+    {
+      plugin: CracoCesiumPlugin({
+        loadPartially: false,
+        loadCSSinHTML: true,
+        cesiumPath: 'cesium',
+      }),
+    },
   ],
 };

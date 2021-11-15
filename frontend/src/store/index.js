@@ -11,6 +11,7 @@ export const store = configureStore({
     infobox: infoboxSliceReducer,
     coverageControl: coverageControlReducer,
   },
+  devTools: process.env.NODE_ENV !== 'production',
 });
 
 export default store;

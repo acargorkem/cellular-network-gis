@@ -56,8 +56,11 @@ const geojsonSlice = createSlice({
       state.isLoading = true;
     },
     [fetchGeojsonFromApi.rejected]: (state, { payload }) => {
-      alert(payload.errorMessage);
       state.isLoading = false;
+      if (!payload) {
+        return alert('An unexpected error occurred');
+      }
+      return alert(payload.errorMessage || 'An unexpected error occurred');
     },
   },
 });

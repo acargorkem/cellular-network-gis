@@ -18,6 +18,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-security": "^1.4.0",
     "nodemon": "^2.0.13"
   },
