@@ -1,6 +1,7 @@
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
+const compression = require('compression');
 const multer = require('multer');
 
 const toGeoJson = require('@tmcw/togeojson');
@@ -11,6 +12,7 @@ const port = process.env.PORT || 5000;
 const app = express();
 
 app.use(helmet());
+app.use(compression());
 app.use(
   cors({
     origin:

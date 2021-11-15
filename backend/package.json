@@ -6,6 +6,7 @@
   "dependencies": {
     "@tmcw/togeojson": "^4.5.0",
     "adm-zip": "^0.5.9",
+    "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
