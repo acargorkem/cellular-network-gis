@@ -3,6 +3,9 @@
 FROM node:12-stretch as builder
 WORKDIR /build
 COPY package.json package-lock.json ./
+
+ENV NODE_ENV production
+
 RUN npm ci
 COPY . .
 

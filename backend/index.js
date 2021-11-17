@@ -11,12 +11,13 @@ const AdmZip = require('adm-zip');
 const port = process.env.PORT || 5000;
 const app = express();
 
+const origins = ['https://cellularapp.tech', 'https://www.cellularapp.tech'];
+
 app.use(helmet());
 app.use(compression());
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === 'production' ? 'http://cellularapp.tech' : true,
+    origin: process.env.NODE_ENV === 'production' ? origins : true,
     credentials: true,
   })
 );
