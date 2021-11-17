@@ -49,6 +49,10 @@ const unzip = (zipFileBuffer) => {
   }
 };
 
+const selectPointFeatures = (feature) => {
+  return feature.geometry.type === 'Point';
+};
+
 app.post('/file-upload', async (req, res) => {
   upload(req, res, async (err) => {
     if (err instanceof multer.MulterError) {
@@ -80,13 +84,24 @@ app.post('/file-upload', async (req, res) => {
       }
     }
     const kml = new DOMParser().parseFromString(fileString);
-    const geoJson = toGeoJson.kml(kml);
+    let geoJson = toGeoJson.kml(kml);
     if (geoJson.features.length === 0) {
       return res.status(400).send({
         errorMessage:
           'No features found in the file. Please make sure the file contains feature collection.',
       });
     }
+    const points = geoJson.features.filter(selectPointFeatures);
+
+    if (points.length === 0) {
+      return res.status(400).send({
+        errorMessage: 'File must contain point data!',
+      });
+    }
+    geoJson = {
+      type: 'FeatureCollection',
+      features: points,
+    };
     delete file.buffer;
     return res.send({ file, geoJson });
   });
