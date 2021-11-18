@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  backend:
+    image: cellular-app-backend
+    build:
+      context: backend
+      dockerfile: dev.Dockerfile
+    ports:
+      - 5000:5000      
+    networks:
+      - mern-app
+    volumes:
+      - ./backend:/home/node/src/
+      - /home/node/src/node_modules
+    
+  frontend:
+    image: cellular-app-frontend
+    stdin_open: true
+    build:
+      context: frontend
+      dockerfile: dev.Dockerfile
+    ports:
+      - 3000:3000
+    networks:
+      - mern-app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - NODE_ENV=development
+    volumes:
+      - ./frontend:/home/node/src
+      - /home/node/src/node_modules
+
+networks:
+  mern-app:
+    driver: bridge
+
+      

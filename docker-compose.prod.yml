@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  backend:
+    image: acargorkem/cellular-app:backend
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+    environment:
+      - NODE_ENV=production
+    networks:
+      - mern-app
+    
+  frontend:
+    image: acargorkem/cellular-app:frontend
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./certs/:/etc/certs/cellularapp.tech/
+    networks:
+      - mern-app
+
+networks:
+  mern-app:
+    driver: bridge
+
+      
