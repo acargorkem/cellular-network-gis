@@ -18,8 +18,15 @@ export default function CoverageArea(props) {
     }
     const setCoverageAreaBounds = (features, distances) => {
       let distancesStrongest = distances;
-      let distancesMedium = distances.map((distance) => distance * 1.5);
-      let distancesWeakest = distances.map((distance) => distance * 2);
+      let distancesMedium = distances.map((distance) => {
+        return multiplyDistance(distance, 1.5);
+      });
+      let distancesWeakest = distances.map((distance) => {
+        return multiplyDistance(distance, 2);
+      });
+      console.log(distancesStrongest);
+      console.log(distancesMedium);
+      console.log(distancesWeakest);
       setBoundsStrongest(getBounds(features, distancesStrongest));
       setBoundsMedium(getBounds(features, distancesMedium));
       setBoundsWeakest(getBounds(features, distancesWeakest));
@@ -33,6 +40,14 @@ export default function CoverageArea(props) {
   const getBounds = (features, distances) => {
     let points = getCoverageAreaBoundsForFeatures(features, distances);
     return points;
+  };
+
+  const multiplyDistance = ({ top, right, left }, multiplier) => {
+    return {
+      top: top * multiplier,
+      right: right * multiplier,
+      left: left * multiplier,
+    };
   };
 
   const polygonOptions = {
