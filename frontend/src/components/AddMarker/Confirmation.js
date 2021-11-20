@@ -7,7 +7,11 @@ import WorkingAreaSelector from '../MapVisualization/WorkingAreaSelector';
 export default function Confirmation({ onConfirm, onCancel }) {
   const [name, setName] = useState();
   const [isValid, setIsValid] = useState(false);
-  const [coverageDistance, setCoverageDistance] = useState(1000);
+  const [coverageDistance, setCoverageDistance] = useState({
+    top: 500,
+    right: 500,
+    left: 500,
+  });
 
   const onBlurHandle = (e) => {
     e.preventDefault();
