@@ -1,65 +1,49 @@
 import { useState, useEffect } from 'react';
-import Select from 'react-select';
+import CustomSelector from './CustomSelector';
 import './WorkingAreaSelector.css';
 
-const options = [
-  {
-    label: 'Dense urban',
-    value: 500,
-  },
-  {
-    label: 'Urban',
-    value: 750,
-  },
-  {
-    label: 'Sub urban',
-    value: 1000,
-  },
-  {
-    label: 'Rural',
-    value: 2000,
-  },
-  {
-    label: 'Village',
-    value: 4000,
-  },
-];
-
-export default function WorkingAreaSelector(props) {
-  const [selectedValue, setSelectedValue] = useState(null);
+function WorkingAreaSelector({ selectedDistance, arrayIndex, setDistance }) {
+  const [currentDistances, setCurrentDistances] = useState(selectedDistance);
 
   useEffect(() => {
-    const getInitialValue = () => {
-      return options.find((option) => option.value == props.selectedDistance);
-    };
-    setSelectedValue(getInitialValue());
-  }, [props.selectedDistance]);
+    setDistance(currentDistances, arrayIndex);
+  }, [currentDistances, arrayIndex, setDistance]);
 
-  const handleChange = (selectedOption) => {
-    props.setDistance(selectedOption.value, props.arrayIndex);
-    setSelectedValue(selectedOption);
+  const changeState = (key, value) => {
+    const distance = { ...currentDistances };
+    distance[key] = value;
+    setCurrentDistances({ ...distance });
+  };
+
+  const handleChangeTop = ({ value }) => {
+    changeState('top', value);
+  };
+
+  const handleChangeRight = ({ value }) => {
+    changeState('right', value);
+  };
+
+  const handleChangeLeft = ({ value }) => {
+    changeState('left', value);
   };
 
   return (
     <div className="selector-working-area">
       <div className="selector-text">Base station working area</div>
-      <Select
-        className="selector"
-        classNamePrefix="selector"
-        value={selectedValue}
-        defaultValue={selectedValue}
-        onChange={handleChange}
-        options={options}
-        theme={(theme) => ({
-          ...theme,
-          borderRadius: '0.5rem',
-          colors: {
-            ...theme.colors,
-            primary25: '#8ab4f8',
-            primary: '#202124',
-          },
-        })}
+      <CustomSelector
+        selectedDistance={currentDistances.top}
+        handleChange={handleChangeTop}
+      />
+      <CustomSelector
+        selectedDistance={currentDistances.right}
+        handleChange={handleChangeRight}
+      />
+      <CustomSelector
+        selectedDistance={currentDistances.left}
+        handleChange={handleChangeLeft}
       />
     </div>
   );
 }
+
+export default WorkingAreaSelector;

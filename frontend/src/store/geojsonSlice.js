@@ -17,8 +17,8 @@ const initialState = {
 
 const initialDistances = {
   top: 500,
-  left: 500,
-  right: 500,
+  left: 1000,
+  right: 750,
 };
 
 export const fetchGeojsonFromApi = createAsyncThunk(
