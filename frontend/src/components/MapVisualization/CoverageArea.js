@@ -24,9 +24,6 @@ export default function CoverageArea(props) {
       let distancesWeakest = distances.map((distance) => {
         return multiplyDistance(distance, 2);
       });
-      console.log(distancesStrongest);
-      console.log(distancesMedium);
-      console.log(distancesWeakest);
       setBoundsStrongest(getBounds(features, distancesStrongest));
       setBoundsMedium(getBounds(features, distancesMedium));
       setBoundsWeakest(getBounds(features, distancesWeakest));
