@@ -38,17 +38,17 @@ const getHexagonBoundsInCartesian3 = (lonRadian, latRadian, height, radius) => {
  * @param latRadian Latitude in radian
  * @param lonRadian Longitude in radian
  * @param d Angular distance, yourRadius / radiusOfEarthInMeters
- * @param bearing Bearing in radian
+ * @param azimuth Azimuth in radian
  **/
-const getDestinationPoint = (latRadian, lonRadian, d, bearing) => {
+const getDestinationPoint = (latRadian, lonRadian, d, azimuth) => {
   const newLatitudeInRadian = Math.asin(
     Math.sin(latRadian) * Math.cos(d) +
-      Math.cos(latRadian) * Math.sin(d) * Math.cos(bearing)
+      Math.cos(latRadian) * Math.sin(d) * Math.cos(azimuth)
   );
   const newLongitudeInRadian =
     lonRadian +
     Math.atan2(
-      Math.sin(bearing) * Math.sin(d) * Math.cos(latRadian),
+      Math.sin(azimuth) * Math.sin(d) * Math.cos(latRadian),
       Math.cos(d) - Math.sin(latRadian) * Math.sin(newLatitudeInRadian)
     );
   return { newLongitudeInRadian, newLatitudeInRadian };
@@ -60,20 +60,20 @@ const getDestinationPoint = (latRadian, lonRadian, d, bearing) => {
  * @param lonDegree Longitude in degree
  * @param latDegree Latitude in degree
  * @param height Height in meters
- * @param bearing Bearing in radian
+ * @param azimuth Azimuth in radian
  * @param radius Radius in meters
  **/
 const getCenterForSingleSector = (
   lonDegree,
   latDegree,
   height,
-  bearing,
+  azimuth,
   radius
 ) => {
   const latRadian = CesiumMath.toRadians(latDegree);
   const lonRadian = CesiumMath.toRadians(lonDegree);
 
-  const radian = CesiumMath.toRadians(bearing);
+  const radian = CesiumMath.toRadians(azimuth);
   const d = radius / radiusOfEarthInMeters;
   const { newLongitudeInRadian, newLatitudeInRadian } = getDestinationPoint(
     latRadian,
@@ -99,15 +99,15 @@ export const getCoverageAreaBoundsForFeatures = (features, distances) => {
 
     const threeSector = [
       {
-        bearing: 0, // top
+        azimuth: 0, // top
         distance: distance.top / 2,
       },
       {
-        bearing: 120, // right
+        azimuth: 120, // right
         distance: distance.right / 2,
       },
       {
-        bearing: 240, // left
+        azimuth: 240, // left
         distance: distance.left / 2,
       },
     ];
@@ -116,7 +116,7 @@ export const getCoverageAreaBoundsForFeatures = (features, distances) => {
         lon,
         lat,
         height,
-        sector.bearing,
+        sector.azimuth,
         sector.distance
       );
       return [...center, sector.distance];
