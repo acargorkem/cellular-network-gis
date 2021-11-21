@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Select from 'react-select';
 import { useEffect, useState } from 'react';
 
@@ -33,10 +34,46 @@ function CustomSelector({ selectedDistance, handleChange }) {
     setSelectedValue(getInitialValue());
   }, [selectedDistance]);
 
+  const customStyles = {
+    control: (base) => ({
+      ...base,
+      minHeight: 20,
+      width: '6rem',
+      fontSize: '0.7rem',
+      fontFamily: 'var(--paper-font-common-base_-_font-family)',
+      padding: 0.25,
+    }),
+    dropdownIndicator: (base) => ({
+      ...base,
+      padding: 4,
+    }),
+    clearIndicator: (base) => ({
+      ...base,
+      padding: 4,
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      padding: '0px 6px',
+    }),
+    input: (base) => ({
+      ...base,
+      margin: 0,
+      padding: 0,
+    }),
+    option: (base) => ({
+      ...base,
+      color: 'black',
+      fontSize: '0.7rem',
+      fontFamily: 'var(--paper-font-common-base_-_font-family)',
+    }),
+    menu: (base) => ({
+      ...base,
+      width: '6rem',
+    }),
+  };
+
   return (
     <Select
-      className="selector"
-      classNamePrefix="selector"
       value={selectedValue}
       defaultValue={selectedValue}
       onChange={handleChange}
@@ -47,9 +84,9 @@ function CustomSelector({ selectedDistance, handleChange }) {
         colors: {
           ...theme.colors,
           primary25: '#8ab4f8',
-          primary: '#202124',
         },
       })}
+      styles={customStyles}
     />
   );
 }

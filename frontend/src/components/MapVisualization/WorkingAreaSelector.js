@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import CustomSelector from './CustomSelector';
 import './WorkingAreaSelector.css';
+import { BsArrowUp, BsArrowDownRight, BsArrowDownLeft } from 'react-icons/bs';
 
 function WorkingAreaSelector({ selectedDistance, arrayIndex, setDistance }) {
   const [currentDistances, setCurrentDistances] = useState(selectedDistance);
@@ -28,20 +29,41 @@ function WorkingAreaSelector({ selectedDistance, arrayIndex, setDistance }) {
   };
 
   return (
-    <div className="selector-working-area">
-      <div className="selector-text">Base station working area</div>
-      <CustomSelector
-        selectedDistance={currentDistances.top}
-        handleChange={handleChangeTop}
-      />
-      <CustomSelector
-        selectedDistance={currentDistances.right}
-        handleChange={handleChangeRight}
-      />
-      <CustomSelector
-        selectedDistance={currentDistances.left}
-        handleChange={handleChangeLeft}
-      />
+    <div className="working-area-selector__container">
+      <h5 className="working-area-selector__title">
+        Select base station working area
+      </h5>
+
+      <div className="working-area-selector__top-label">
+        <span>Azimuth : 0&#176;</span>
+      </div>
+      <div className="working-area-selector__top">
+        <CustomSelector
+          selectedDistance={currentDistances.top}
+          handleChange={handleChangeTop}
+        />
+      </div>
+      <BsArrowUp className="working-area-selector__top-icon" />
+      <div className="working-area-selector__right-label">
+        <span>Azimuth : 120&#176;</span>
+      </div>
+      <div className="working-area-selector__right">
+        <CustomSelector
+          selectedDistance={currentDistances.right}
+          handleChange={handleChangeRight}
+        />
+      </div>
+      <BsArrowDownRight className="working-area-selector__right-icon" />
+      <div className="working-area-selector__left-label">
+        <span>Azimuth : 240&#176;</span>
+      </div>
+      <div className="working-area-selector__left">
+        <CustomSelector
+          selectedDistance={currentDistances.left}
+          handleChange={handleChangeLeft}
+        />
+      </div>
+      <BsArrowDownLeft className="working-area-selector__left-icon" />
     </div>
   );
 }
