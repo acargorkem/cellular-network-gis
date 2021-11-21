@@ -37,8 +37,21 @@ export default function Confirmation({ onConfirm, onCancel }) {
     setCoverageDistance(distance);
   };
 
+  const onKeyPressed = (e) => {
+    if (e.key == 'Enter') {
+      onConfirmHandle();
+    } else if (e.key == 'Escape') {
+      onCancelHandle();
+    }
+  };
+
   return ReactDOM.createPortal(
-    <div className="confirmation-container">
+    <div
+      className="confirmation-container"
+      role="button"
+      onKeyDown={onKeyPressed}
+      tabIndex="0"
+    >
       <div className="confirmation-title">Add Base Station Marker</div>
       <div className="confirmation-context">
         <input
