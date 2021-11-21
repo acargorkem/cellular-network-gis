@@ -9,11 +9,11 @@ function ColorModelControl() {
     },
     {
       color: 'rgb(255, 227, 0)',
-      label: '-80 dBm',
+      label: '-75 dBm',
     },
     {
       color: 'rgb(255, 0, 0)',
-      label: '-100 dBm',
+      label: '-85 dBm',
     },
   ];
 

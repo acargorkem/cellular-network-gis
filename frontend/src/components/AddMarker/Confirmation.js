@@ -7,7 +7,11 @@ import WorkingAreaSelector from '../MapVisualization/WorkingAreaSelector';
 export default function Confirmation({ onConfirm, onCancel }) {
   const [name, setName] = useState();
   const [isValid, setIsValid] = useState(false);
-  const [coverageDistance, setCoverageDistance] = useState(1000);
+  const [coverageDistance, setCoverageDistance] = useState({
+    top: 500,
+    right: 500,
+    left: 500,
+  });
 
   const onBlurHandle = (e) => {
     e.preventDefault();
@@ -33,8 +37,21 @@ export default function Confirmation({ onConfirm, onCancel }) {
     setCoverageDistance(distance);
   };
 
+  const onKeyPressed = (e) => {
+    if (e.key == 'Enter') {
+      onConfirmHandle();
+    } else if (e.key == 'Escape') {
+      onCancelHandle();
+    }
+  };
+
   return ReactDOM.createPortal(
-    <div className="confirmation-container">
+    <div
+      className="confirmation-container"
+      role="button"
+      onKeyDown={onKeyPressed}
+      tabIndex="0"
+    >
       <div className="confirmation-title">Add Base Station Marker</div>
       <div className="confirmation-context">
         <input

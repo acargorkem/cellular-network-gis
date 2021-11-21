@@ -6,9 +6,9 @@
   flex-direction: column;
   align-items: center;
   border-radius: 12px;
-  height: max(20vh, 175px);
+  height: max(30vh, 300px);
   margin: 20vh auto;
-  max-width: 300px;
+  max-width: 400px;
   padding: 10px;
   justify-content: space-between;
 }
