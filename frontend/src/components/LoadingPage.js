@@ -1,9 +1,18 @@
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
+import { useState, useEffect } from 'react';
 import './LoadingPage.css';
 import { CgSpinnerTwo } from 'react-icons/cg';
 
-export default function LoadingPage() {
-  const isLoading = useSelector((state) => state.coverageArea.isLoading);
+function LoadingPage(props) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (props.kmlData) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [props]);
 
   return (
     isLoading && (
@@ -15,3 +24,11 @@ export default function LoadingPage() {
     )
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    kmlData: state.kmlData.isLoading,
+  };
+};
+
+export default connect(mapStateToProps, null)(LoadingPage);

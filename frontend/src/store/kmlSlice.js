@@ -34,7 +34,7 @@ export const fetchGeojsonFromApi = createAsyncThunk(
   }
 );
 
-const geojsonSlice = createSlice({
+const kmlSlice = createSlice({
   name: 'geoJson',
   initialState,
   reducers: {
@@ -73,7 +73,7 @@ const geojsonSlice = createSlice({
   },
 });
 
-const { actions, reducer } = geojsonSlice;
+const { actions, reducer } = kmlSlice;
 
 export const { setDistance, setPropertyName } = actions;
 

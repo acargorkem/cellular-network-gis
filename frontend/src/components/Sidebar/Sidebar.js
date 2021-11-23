@@ -69,7 +69,7 @@ function Sidebar(props) {
 
 const mapStateToProps = (state) => {
   return {
-    coverageAreaFile: state.coverageArea.file,
+    coverageAreaFile: state.kmlData.file,
   };
 };
 

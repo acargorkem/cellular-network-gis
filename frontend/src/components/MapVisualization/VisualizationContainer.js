@@ -19,7 +19,7 @@ function VisualizationContainer(props) {
       />
       <FileDataVisualization
         opacity={props.coverageOpacity}
-        data={props.coverageAreaData}
+        data={props.kmlData}
       />
     </>
   );
@@ -27,8 +27,8 @@ function VisualizationContainer(props) {
 
 const mapStateToProps = (state) => {
   return {
-    coverageAreaData: state.coverageArea,
-    firstCoords: state.coverageArea.firstCoords,
+    kmlData: state.kmlData,
+    firstCoords: state.kmlData.firstCoords,
     markersData: state.markers,
     coverageOpacity: state.coverageControl.opacity,
   };

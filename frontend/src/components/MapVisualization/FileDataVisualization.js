@@ -1,5 +1,5 @@
 import { useEffect, useContext } from 'react';
-import { setPropertyName, setDistance } from '../../store/geojsonSlice';
+import { setPropertyName, setDistance } from '../../store/kmlSlice';
 import { setInfoboxStatus, setInfoboxContent } from '../../store/infoboxSlice';
 import { connect } from 'react-redux';
 import CoverageDataVisualization from './CoverageDataVisualization';

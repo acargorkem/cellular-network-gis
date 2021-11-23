@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { fetchGeojsonFromApi } from '../../store/geojsonSlice';
+import { fetchGeojsonFromApi } from '../../store/kmlSlice';
 import { useDropzone } from 'react-dropzone';
 import './FileUpload.css';
 import { FiUpload } from 'react-icons/fi';
