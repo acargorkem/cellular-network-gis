@@ -42,6 +42,9 @@ function CustomSelector({ selectedDistance, handleChange }) {
       fontSize: '0.7rem',
       fontFamily: 'var(--paper-font-common-base_-_font-family)',
       padding: 0.25,
+      '&:hover': {
+        cursor: 'pointer',
+      },
     }),
     dropdownIndicator: (base) => ({
       ...base,
