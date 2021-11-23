@@ -1,0 +1,23 @@
+.infobox-data-control {
+  margin: auto 0 10px 0;
+  padding: 0.2rem 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 20px;
+}
+
+.infobox-data-control > button {
+  height: 30px;
+  border: 0;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex: 1 1;
+  justify-content: space-evenly;
+}
+
+.button-change-location.active {
+  background-color: var(--color-active-light);
+}
