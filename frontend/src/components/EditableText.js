@@ -38,7 +38,7 @@ export default function EditableText(props) {
     <div className="editable-text-container">
       {isEditActive ? (
         <input
-          pattern=".{3,30}"
+          pattern=".{1,30}"
           className="editable-text-content"
           required
           defaultValue={acceptedText}
