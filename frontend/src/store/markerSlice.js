@@ -54,6 +54,13 @@ export const markerSlice = createSlice({
       }
       properties.name = name;
     },
+    deleteFeature: (state, { payload }) => {
+      let { index } = payload;
+      let features = state.geoJson.features;
+      let distances = state.distances;
+      features.splice(index, 1);
+      distances.splice(index, 1);
+    },
     toggleIsAddMarkerActive: (state) => {
       state.isAddMarkerActive = !state.isAddMarkerActive;
     },
@@ -84,6 +91,7 @@ const { actions, reducer } = markerSlice;
 export const {
   setDistance,
   setPropertyName,
+  deleteFeature,
   toggleIsAddMarkerActive,
   setIsAddMarkerActive,
 } = actions;

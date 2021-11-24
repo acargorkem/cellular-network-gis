@@ -14,6 +14,13 @@ function InfoboxDataControl(props) {
     return isChangeLocationActive ? 'active' : '';
   };
 
+  const onDeleteHandle = () => {
+    if (window.confirm('Are you sure you wish to delete this marker?')) {
+      props.closeInfobox();
+      props.deleteMarker(props.arrayIndex);
+    }
+  };
+
   return (
     <div className="infobox-data-control">
       <button
@@ -23,7 +30,7 @@ function InfoboxDataControl(props) {
         {!isChangeLocationActive ? 'Change Location' : 'Cancel'}
         {!isChangeLocationActive ? <GiMove /> : <GiCancel />}
       </button>
-      <button className="button-delete" onClick={props.deleteMarker}>
+      <button className="button-delete" onClick={onDeleteHandle}>
         Delete Marker !
         <AiFillDelete />
       </button>

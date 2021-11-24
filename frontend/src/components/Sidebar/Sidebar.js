@@ -8,6 +8,7 @@ import { ReactComponent as CommTowerIcon } from '../../assets/icons/communicatio
 import CoverageModelControl from '../CoverageModelControl/CoverageModelControl';
 import AddMarkerToggleButton from '../AddMarker/AddMarkerToggleButton';
 import { FiUpload } from 'react-icons/fi';
+import { setInfoboxStatus } from '../../store/infoboxSlice';
 
 //TODO:REFACTOR : make component from fileupload toggle logic
 function Sidebar(props) {
@@ -15,6 +16,7 @@ function Sidebar(props) {
   const [isFileUpload, setIsFileUpload] = useState(false);
 
   const toggleFileUpload = () => {
+    props.setInfoboxStatus('inactive');
     setIsFileUpload(!isFileUpload);
   };
 
@@ -73,4 +75,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(Sidebar);
+const mapDispatchToProps = {
+  setInfoboxStatus,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

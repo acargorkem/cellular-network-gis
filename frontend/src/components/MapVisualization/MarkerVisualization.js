@@ -1,5 +1,9 @@
 import { connect } from 'react-redux';
-import { setPropertyName, setDistance } from '../../store/markerSlice';
+import {
+  setPropertyName,
+  setDistance,
+  deleteFeature,
+} from '../../store/markerSlice';
 import { setInfoboxStatus, setInfoboxContent } from '../../store/infoboxSlice';
 import CoverageDataVisualization from './CoverageDataVisualization';
 import Infobox from './Infobox';
@@ -17,8 +21,13 @@ function MarkerVisualization(props) {
   };
 
   const openInfobox = (content) => {
+    props.setInfoboxStatus('inactive');
     props.setInfoboxContent(content);
     props.setInfoboxStatus('markerData');
+  };
+
+  const deleteMarker = (index) => {
+    props.deleteFeature({ index });
   };
 
   return (
@@ -31,7 +40,11 @@ function MarkerVisualization(props) {
         opacity={props.opacity}
       />
       {props.infoboxStatus == 'markerData' && (
-        <Infobox setDistance={setDistance} setName={setName} />
+        <Infobox
+          setDistance={setDistance}
+          setName={setName}
+          deleteMarker={deleteMarker}
+        />
       )}
     </>
   );
@@ -46,6 +59,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   setPropertyName,
   setDistance,
+  deleteFeature,
   setInfoboxStatus,
   setInfoboxContent,
 };

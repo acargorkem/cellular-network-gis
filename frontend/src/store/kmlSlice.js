@@ -49,12 +49,20 @@ const kmlSlice = createSlice({
       }
       properties.name = name;
     },
+    deleteFeature: (state, { payload }) => {
+      let { index } = payload;
+      let features = state.geoJson.features;
+      let distances = state.distances;
+      features.splice(index, 1);
+      distances.splice(index, 1);
+    },
   },
   extraReducers: {
     [fetchGeojsonFromApi.fulfilled]: (state, { payload }) => {
       state.geoJson = payload.geoJson;
       state.firstCoords = payload.geoJson.features[0].geometry.coordinates;
       state.file = payload.file;
+      state.distances = [];
       state.distances = new Array(payload.geoJson.features.length).fill(
         initialDistances
       );
@@ -75,6 +83,6 @@ const kmlSlice = createSlice({
 
 const { actions, reducer } = kmlSlice;
 
-export const { setDistance, setPropertyName } = actions;
+export const { setDistance, setPropertyName, deleteFeature } = actions;
 
 export default reducer;

@@ -39,7 +39,11 @@ function Infobox(props) {
           setDistance={props.setDistance}
         />
       </div>
-      <InfoboxDataControl deleteMarker={props.deleteMarker} />
+      <InfoboxDataControl
+        closeInfobox={closeButtonHandle}
+        arrayIndex={props.arrayIndex}
+        deleteMarker={props.deleteMarker}
+      />
     </div>
   );
 }
