@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { GiMove, GiCancel } from 'react-icons/gi';
 import { AiFillDelete } from 'react-icons/ai';
 import './InfoboxDataControl.css';
+import SelectCoordsFromMap from '../SelectCoordsFromMap';
 
 function InfoboxDataControl(props) {
   const [isChangeLocationActive, setIsChangeLocationActive] = useState(false);
@@ -21,14 +22,28 @@ function InfoboxDataControl(props) {
     }
   };
 
+  const onUpdateHandle = (cartographic) => {
+    props.updateMarkerPosition(cartographic, props.arrayIndex);
+  };
+
   return (
     <div className="infobox-data-control">
       <button
         className={`button-change-location ${getLocationStyle()}`}
         onClick={toggleChangeLocation}
       >
-        {!isChangeLocationActive ? 'Change Location' : 'Cancel'}
-        {!isChangeLocationActive ? <GiMove /> : <GiCancel />}
+        {isChangeLocationActive ? (
+          <>
+            {'Select a new location on map'}
+            <GiCancel />
+            <SelectCoordsFromMap onClickHandle={onUpdateHandle} />
+          </>
+        ) : (
+          <>
+            {'Update Location'}
+            <GiMove />
+          </>
+        )}
       </button>
       <button className="button-delete" onClick={onDeleteHandle}>
         Delete Marker !

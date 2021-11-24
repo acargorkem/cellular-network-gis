@@ -3,6 +3,7 @@ import {
   setPropertyName,
   setDistance,
   deleteFeature,
+  updatePosition,
 } from '../../store/markerSlice';
 import { setInfoboxStatus, setInfoboxContent } from '../../store/infoboxSlice';
 import CoverageDataVisualization from './CoverageDataVisualization';
@@ -30,6 +31,10 @@ function MarkerVisualization(props) {
     props.deleteFeature({ index });
   };
 
+  const updateMarkerPosition = (coords, index) => {
+    props.updatePosition({ coords, index });
+  };
+
   return (
     <>
       <CoverageDataVisualization
@@ -44,6 +49,7 @@ function MarkerVisualization(props) {
           setDistance={setDistance}
           setName={setName}
           deleteMarker={deleteMarker}
+          updateMarkerPosition={updateMarkerPosition}
         />
       )}
     </>
@@ -62,6 +68,7 @@ const mapDispatchToProps = {
   deleteFeature,
   setInfoboxStatus,
   setInfoboxContent,
+  updatePosition,
 };
 
 export default connect(

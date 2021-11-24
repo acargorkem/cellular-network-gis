@@ -39,6 +39,19 @@ export const addMarker = createAsyncThunk(
   }
 );
 
+export const updatePosition = createAsyncThunk(
+  'markers/updatePosition',
+  async (data, { rejectWithValue }) => {
+    try {
+      const { coords, index } = data;
+      const coordsWithHeight = await addTerrainHeightToCartographic(coords);
+      return { coordsWithHeight, index };
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const markerSlice = createSlice({
   name: 'markers',
   initialState,
@@ -82,6 +95,11 @@ export const markerSlice = createSlice({
     [addMarker.rejected]: (state, { payload }) => {
       alert(payload.errorMessage);
       state.isLoading = false;
+    },
+    [updatePosition.fulfilled]: (state, { payload }) => {
+      let { coordsWithHeight, index } = payload;
+      let geometry = state.geoJson.features[index].geometry;
+      geometry.coordinates = coordsWithHeight;
     },
   },
 });

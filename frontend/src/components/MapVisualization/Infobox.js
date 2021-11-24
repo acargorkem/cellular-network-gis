@@ -43,6 +43,7 @@ function Infobox(props) {
         closeInfobox={closeButtonHandle}
         arrayIndex={props.arrayIndex}
         deleteMarker={props.deleteMarker}
+        updateMarkerPosition={props.updateMarkerPosition}
       />
     </div>
   );

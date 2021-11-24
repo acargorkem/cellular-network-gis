@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import MapApi from '../api/MapApi';
 import { addTerrainHeightToData } from '../services/addTerrainHeightToData';
+import { addTerrainHeightToCartographic } from '../services/coords';
 
 const initialGeoJson = {
   type: 'FeatureCollection',
@@ -30,6 +31,19 @@ export const fetchGeojsonFromApi = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const updatePosition = createAsyncThunk(
+  'geoJson/updatePosition',
+  async (data, { rejectWithValue }) => {
+    try {
+      const { coords, index } = data;
+      const coordsWithHeight = await addTerrainHeightToCartographic(coords);
+      return { coordsWithHeight, index };
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -77,6 +91,11 @@ const kmlSlice = createSlice({
         return alert('An unexpected error occurred');
       }
       return alert(payload.errorMessage || 'An unexpected error occurred');
+    },
+    [updatePosition.fulfilled]: (state, { payload }) => {
+      let { coordsWithHeight, index } = payload;
+      let geometry = state.geoJson.features[index].geometry;
+      geometry.coordinates = coordsWithHeight;
     },
   },
 });

@@ -3,6 +3,7 @@ import {
   setPropertyName,
   setDistance,
   deleteFeature,
+  updatePosition,
 } from '../../store/kmlSlice';
 import { setInfoboxStatus, setInfoboxContent } from '../../store/infoboxSlice';
 import { connect } from 'react-redux';
@@ -47,6 +48,10 @@ function FileDataVisualization(props) {
     props.deleteFeature({ index });
   };
 
+  const updateMarkerPosition = (coords, index) => {
+    props.updatePosition({ coords, index });
+  };
+
   return (
     <>
       <CoverageDataVisualization
@@ -61,6 +66,7 @@ function FileDataVisualization(props) {
           setDistance={setDistance}
           setName={setName}
           deleteMarker={deleteMarker}
+          updateMarkerPosition={updateMarkerPosition}
         />
       )}
     </>
@@ -79,6 +85,7 @@ const mapDispatchToProps = {
   deleteFeature,
   setInfoboxStatus,
   setInfoboxContent,
+  updatePosition,
 };
 
 export default connect(
