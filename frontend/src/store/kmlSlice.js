@@ -26,6 +26,11 @@ export const fetchGeojsonFromApi = createAsyncThunk(
   'geoJson/fetchgeoJson',
   async (data, { rejectWithValue }) => {
     try {
+      const fileName = data.get('file').name;
+      if (fileName.endsWith('.geojson')) {
+        const response = await MapApi.uploadGeojsonFile(data);
+        return response.data;
+      }
       const response = await MapApi.uploadKmlFile(data);
       await addTerrainHeightToData(response.data.geoJson.features); // mutating response data
       return response.data;
@@ -70,6 +75,7 @@ const kmlSlice = createSlice({
       features.splice(index, 1);
       distances.splice(index, 1);
     },
+    resetKmlData: () => initialState,
   },
   extraReducers: {
     [fetchGeojsonFromApi.fulfilled]: (state, { payload }) => {
@@ -102,6 +108,7 @@ const kmlSlice = createSlice({
 
 const { actions, reducer } = kmlSlice;
 
-export const { setDistance, setPropertyName, deleteFeature } = actions;
+export const { setDistance, setPropertyName, deleteFeature, resetKmlData } =
+  actions;
 
 export default reducer;

@@ -80,6 +80,7 @@ export const markerSlice = createSlice({
     setIsAddMarkerActive: (state, { payload }) => {
       state.isAddMarkerActive = payload;
     },
+    resetMarkerData: () => initialState,
   },
   extraReducers: {
     [addMarker.fulfilled]: (state, { payload }) => {
@@ -112,6 +113,7 @@ export const {
   deleteFeature,
   toggleIsAddMarkerActive,
   setIsAddMarkerActive,
+  resetMarkerData,
 } = actions;
 
 export default reducer;

@@ -9,6 +9,7 @@ import CoverageModelControl from '../CoverageModelControl/CoverageModelControl';
 import AddMarkerToggleButton from '../AddMarker/AddMarkerToggleButton';
 import { FiUpload } from 'react-icons/fi';
 import { setInfoboxStatus } from '../../store/infoboxSlice';
+import CurrentData from './CurrentData';
 
 //TODO:REFACTOR : make component from fileupload toggle logic
 function Sidebar(props) {
@@ -61,7 +62,8 @@ function Sidebar(props) {
               <AddMarkerToggleButton />
             </div>
             <FileUpload isOpen={isFileUpload} toggle={toggleFileUpload} />
-            <CoverageModelControl data={props.coverageAreaFile} />
+            <CoverageModelControl data={props.kmlFile} />
+            <CurrentData />
           </div>
         </div>
       )}
@@ -71,7 +73,7 @@ function Sidebar(props) {
 
 const mapStateToProps = (state) => {
   return {
-    coverageAreaFile: state.kmlData.file,
+    kmlFile: state.kmlData.file,
   };
 };
 
