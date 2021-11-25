@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { GiMove, GiCancel } from 'react-icons/gi';
+import { GiMove } from 'react-icons/gi';
 import { AiFillDelete } from 'react-icons/ai';
 import './InfoboxDataControl.css';
 import SelectCoordsFromMap from '../SelectCoordsFromMap';
@@ -35,19 +35,18 @@ function InfoboxDataControl(props) {
         {isChangeLocationActive ? (
           <>
             {'Select a new location on map'}
-            <GiCancel />
             <SelectCoordsFromMap onClickHandle={onUpdateHandle} />
           </>
         ) : (
           <>
             {'Update Location'}
-            <GiMove />
+            <GiMove className="infobox-data-control__icon" />
           </>
         )}
       </button>
       <button className="button-delete" onClick={onDeleteHandle}>
         Delete Marker !
-        <AiFillDelete />
+        <AiFillDelete className="infobox-data-control__icon" />
       </button>
     </div>
   );
