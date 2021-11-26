@@ -54,6 +54,19 @@ const selectPointFeatures = (feature) => {
   return feature.geometry.type === 'Point';
 };
 
+const getDistances = (features) => {
+  return features.map((feature) => {
+    if (feature.properties.distances) {
+      return feature.properties.distances;
+    }
+    return {
+      top: 500,
+      left: 500,
+      right: 500,
+    };
+  });
+};
+
 app.post('/file-upload/kml', async (req, res) => {
   upload(req, res, async (err) => {
     if (err instanceof multer.MulterError) {
@@ -103,8 +116,10 @@ app.post('/file-upload/kml', async (req, res) => {
       type: 'FeatureCollection',
       features: points,
     };
+    const distances = getDistances(points);
+
     delete file.buffer;
-    return res.send({ file, geoJson });
+    return res.send({ file, geoJson, distances });
   });
 });
 
@@ -122,9 +137,10 @@ app.post('/file-upload/geojson', async (req, res) => {
       return res.status(400).send({ errorMessage: error.toString() });
     }
     const geoJson = JSON.parse(file.buffer.toString('utf-8'));
+    const distances = getDistances(geoJson.features);
 
     delete file.buffer;
-    return res.send({ file, geoJson });
+    return res.send({ file, geoJson, distances });
   });
 });
 

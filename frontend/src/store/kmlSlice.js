@@ -16,12 +16,6 @@ const initialState = {
   firstCoords: null,
 };
 
-const initialDistances = {
-  top: 500,
-  left: 500,
-  right: 500,
-};
-
 export const fetchGeojsonFromApi = createAsyncThunk(
   'geoJson/fetchgeoJson',
   async (data, { rejectWithValue }) => {
@@ -82,10 +76,7 @@ const kmlSlice = createSlice({
       state.geoJson = payload.geoJson;
       state.firstCoords = payload.geoJson.features[0].geometry.coordinates;
       state.file = payload.file;
-      state.distances = [];
-      state.distances = new Array(payload.geoJson.features.length).fill(
-        initialDistances
-      );
+      state.distances = payload.distances;
       state.isLoading = false;
     },
     [fetchGeojsonFromApi.pending]: (state) => {
