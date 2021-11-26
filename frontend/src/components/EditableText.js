@@ -26,12 +26,21 @@ export default function EditableText(props) {
 
   const cancelEdit = () => {
     setisEditActive(!isEditActive);
+    setText(acceptedText);
   };
 
   const onChangeHandle = (e) => {
     const isValid = e.target.validity.valid;
     isValid ? setIsValid(true) : setIsValid(false);
     setText(e.target.value);
+  };
+
+  const onKeyDown = (e) => {
+    if (e.key == 'Enter') {
+      acceptEdit();
+    } else if (e.key == 'Escape') {
+      cancelEdit();
+    }
   };
 
   return (
@@ -43,6 +52,7 @@ export default function EditableText(props) {
           required
           defaultValue={acceptedText}
           onChange={(e) => onChangeHandle(e)}
+          onKeyDown={onKeyDown}
         ></input>
       ) : (
         <span>{acceptedText}</span>
