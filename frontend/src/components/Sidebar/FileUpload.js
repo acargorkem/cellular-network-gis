@@ -16,6 +16,13 @@ function FileUpload({ isOpen, toggle, fetchGeojsonFromApi }) {
 
   const handleFileChange = (file) => {
     if (!file) return;
+    if (acceptedFiles.length !== 0) {
+      const confirmText =
+        'You may lose your unsaved work, do you want to continue?';
+      if (!window.confirm(confirmText)) {
+        return;
+      }
+    }
     if (!allowedExtensions.exec(file.name)) {
       return alert('Only kml, kmz and geojson files are accepted!');
     }
@@ -32,6 +39,7 @@ function FileUpload({ isOpen, toggle, fetchGeojsonFromApi }) {
   if (!isOpen) {
     return null;
   }
+
   return ReactDOM.createPortal(
     <div className="dropzone-container">
       <div className="dropzone-header">
