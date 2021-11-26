@@ -55,6 +55,9 @@ const selectPointFeatures = (feature) => {
 };
 
 const getDistances = (features) => {
+  if (!features) {
+    return null;
+  }
   return features.map((feature) => {
     if (feature.properties.distances) {
       return feature.properties.distances;
