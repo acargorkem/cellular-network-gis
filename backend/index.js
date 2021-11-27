@@ -63,9 +63,9 @@ const getDistances = (features) => {
       return feature.properties.distances;
     }
     return {
-      top: 500,
-      left: 500,
-      right: 500,
+      top: 300,
+      left: 300,
+      right: 300,
     };
   });
 };

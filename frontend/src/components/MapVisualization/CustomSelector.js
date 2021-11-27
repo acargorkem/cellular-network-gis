@@ -5,15 +5,15 @@ import { useEffect, useState } from 'react';
 const options = [
   {
     label: 'Dense urban',
-    value: 500,
+    value: 300,
   },
   {
     label: 'Urban',
-    value: 750,
+    value: 400,
   },
   {
     label: 'Sub urban',
-    value: 1000,
+    value: 500,
   },
   {
     label: 'Rural',
