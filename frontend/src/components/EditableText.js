@@ -26,6 +26,7 @@ export default function EditableText(props) {
 
   const cancelEdit = () => {
     setisEditActive(!isEditActive);
+    setText(acceptedText);
   };
 
   const onChangeHandle = (e) => {
@@ -34,15 +35,24 @@ export default function EditableText(props) {
     setText(e.target.value);
   };
 
+  const onKeyDown = (e) => {
+    if (e.key == 'Enter') {
+      acceptEdit();
+    } else if (e.key == 'Escape') {
+      cancelEdit();
+    }
+  };
+
   return (
     <div className="editable-text-container">
       {isEditActive ? (
         <input
-          pattern=".{3,30}"
+          pattern=".{1,30}"
           className="editable-text-content"
           required
           defaultValue={acceptedText}
           onChange={(e) => onChangeHandle(e)}
+          onKeyDown={onKeyDown}
         ></input>
       ) : (
         <span>{acceptedText}</span>

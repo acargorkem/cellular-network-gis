@@ -1,9 +1,11 @@
 import { GeoJsonDataSource } from 'resium';
 import CoverageArea from './CoverageArea';
 import antennaLogo from '../../assets/icons/communications-tower.svg';
+import { Color, LabelStyle, Cartesian2, VerticalOrigin } from 'cesium';
 
 export default function CoverageDataVisualization(props) {
   const onLoadHandle = (loadEvent) => {
+    addLabel(loadEvent);
     changeIcons(loadEvent);
   };
 
@@ -11,6 +13,21 @@ export default function CoverageDataVisualization(props) {
     loadEvent.entities.values.map((item) => {
       item.billboard.image = antennaLogo;
       item.billboard.scale = 1.5;
+    });
+  };
+
+  const addLabel = (loadEvent) => {
+    loadEvent.entities.values.map((item) => {
+      item.label = {
+        text: item.name,
+        font: '14px Helvetica',
+        fillColor: Color.WHITE,
+        outlineColor: Color.BLACK,
+        outlineWidth: 4,
+        style: LabelStyle.FILL_AND_OUTLINE,
+        verticalOrigin: VerticalOrigin.BOTTOM,
+        pixelOffset: new Cartesian2(0, -28),
+      };
     });
   };
 

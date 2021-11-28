@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import MapApi from '../api/MapApi';
 import { addTerrainHeightToData } from '../services/addTerrainHeightToData';
+import { addTerrainHeightToCartographic } from '../services/coords';
 
 const initialGeoJson = {
   type: 'FeatureCollection',
@@ -15,16 +16,15 @@ const initialState = {
   firstCoords: null,
 };
 
-const initialDistances = {
-  top: 500,
-  left: 500,
-  right: 500,
-};
-
 export const fetchGeojsonFromApi = createAsyncThunk(
   'geoJson/fetchgeoJson',
   async (data, { rejectWithValue }) => {
     try {
+      const fileName = data.get('file').name;
+      if (fileName.endsWith('.geojson')) {
+        const response = await MapApi.uploadGeojsonFile(data);
+        return response.data;
+      }
       const response = await MapApi.uploadKmlFile(data);
       await addTerrainHeightToData(response.data.geoJson.features); // mutating response data
       return response.data;
@@ -34,7 +34,20 @@ export const fetchGeojsonFromApi = createAsyncThunk(
   }
 );
 
-const geojsonSlice = createSlice({
+export const updatePosition = createAsyncThunk(
+  'geoJson/updatePosition',
+  async (data, { rejectWithValue }) => {
+    try {
+      const { coords, index } = data;
+      const coordsWithHeight = await addTerrainHeightToCartographic(coords);
+      return { coordsWithHeight, index };
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+const kmlSlice = createSlice({
   name: 'geoJson',
   initialState,
   reducers: {
@@ -49,15 +62,21 @@ const geojsonSlice = createSlice({
       }
       properties.name = name;
     },
+    deleteFeature: (state, { payload }) => {
+      let { index } = payload;
+      let features = state.geoJson.features;
+      let distances = state.distances;
+      features.splice(index, 1);
+      distances.splice(index, 1);
+    },
+    resetKmlData: () => initialState,
   },
   extraReducers: {
     [fetchGeojsonFromApi.fulfilled]: (state, { payload }) => {
       state.geoJson = payload.geoJson;
       state.firstCoords = payload.geoJson.features[0].geometry.coordinates;
       state.file = payload.file;
-      state.distances = new Array(payload.geoJson.features.length).fill(
-        initialDistances
-      );
+      state.distances = payload.distances;
       state.isLoading = false;
     },
     [fetchGeojsonFromApi.pending]: (state) => {
@@ -70,11 +89,17 @@ const geojsonSlice = createSlice({
       }
       return alert(payload.errorMessage || 'An unexpected error occurred');
     },
+    [updatePosition.fulfilled]: (state, { payload }) => {
+      let { coordsWithHeight, index } = payload;
+      let geometry = state.geoJson.features[index].geometry;
+      geometry.coordinates = coordsWithHeight;
+    },
   },
 });
 
-const { actions, reducer } = geojsonSlice;
+const { actions, reducer } = kmlSlice;
 
-export const { setDistance, setPropertyName } = actions;
+export const { setDistance, setPropertyName, deleteFeature, resetKmlData } =
+  actions;
 
 export default reducer;

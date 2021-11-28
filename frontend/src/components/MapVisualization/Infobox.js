@@ -4,6 +4,7 @@ import EditableText from '../EditableText';
 import { connect } from 'react-redux';
 import { setInfoboxStatus } from '../../store/infoboxSlice';
 import { AiOutlineClose } from 'react-icons/ai';
+import InfoboxDataControl from './InfoboxDataControl';
 
 function Infobox(props) {
   const closeButtonHandle = () => {
@@ -38,6 +39,12 @@ function Infobox(props) {
           setDistance={props.setDistance}
         />
       </div>
+      <InfoboxDataControl
+        closeInfobox={closeButtonHandle}
+        arrayIndex={props.arrayIndex}
+        deleteMarker={props.deleteMarker}
+        updateMarkerPosition={props.updateMarkerPosition}
+      />
     </div>
   );
 }

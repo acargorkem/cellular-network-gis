@@ -1,5 +1,10 @@
 import { useEffect, useContext } from 'react';
-import { setPropertyName, setDistance } from '../../store/geojsonSlice';
+import {
+  setPropertyName,
+  setDistance,
+  deleteFeature,
+  updatePosition,
+} from '../../store/kmlSlice';
 import { setInfoboxStatus, setInfoboxContent } from '../../store/infoboxSlice';
 import { connect } from 'react-redux';
 import CoverageDataVisualization from './CoverageDataVisualization';
@@ -34,8 +39,17 @@ function FileDataVisualization(props) {
   };
 
   const openInfobox = (content) => {
+    props.setInfoboxStatus('inactive');
     props.setInfoboxContent(content);
     props.setInfoboxStatus('fileData');
+  };
+
+  const deleteMarker = (index) => {
+    props.deleteFeature({ index });
+  };
+
+  const updateMarkerPosition = (coords, index) => {
+    props.updatePosition({ coords, index });
   };
 
   return (
@@ -48,7 +62,12 @@ function FileDataVisualization(props) {
         opacity={props.opacity}
       />
       {props.infoboxStatus == 'fileData' && (
-        <Infobox setDistance={setDistance} setName={setName} />
+        <Infobox
+          setDistance={setDistance}
+          setName={setName}
+          deleteMarker={deleteMarker}
+          updateMarkerPosition={updateMarkerPosition}
+        />
       )}
     </>
   );
@@ -63,8 +82,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   setPropertyName,
   setDistance,
+  deleteFeature,
   setInfoboxStatus,
   setInfoboxContent,
+  updatePosition,
 };
 
 export default connect(

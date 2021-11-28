@@ -8,9 +8,9 @@ export default function Confirmation({ onConfirm, onCancel }) {
   const [name, setName] = useState();
   const [isValid, setIsValid] = useState(false);
   const [coverageDistance, setCoverageDistance] = useState({
-    top: 500,
-    right: 500,
-    left: 500,
+    top: 300,
+    right: 300,
+    left: 300,
   });
 
   const onBlurHandle = (e) => {
@@ -19,6 +19,7 @@ export default function Confirmation({ onConfirm, onCancel }) {
   };
 
   const onChangeHandle = (e) => {
+    setName(e.target.value);
     const isValid = e.target.validity.valid;
     isValid ? setIsValid(true) : setIsValid(false);
   };

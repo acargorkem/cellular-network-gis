@@ -1,0 +1,48 @@
+.current-data-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--color-icon);
+  border-radius: 10px;
+  padding: 0.5rem;
+  grid-row-gap: 0.4rem;
+  row-gap: 0.4rem;
+}
+
+.current-data-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  width: 80%;
+  border-bottom: 1px solid black;
+}
+
+.current-data-delete {
+  width: 1.3em;
+  height: auto;
+}
+
+.current-data-delete:hover {
+  cursor: pointer;
+  color: var(--color-active-light);
+}
+
+.current-data-export {
+  height: 2rem;
+  width: 50%;
+  margin-top: 1rem;
+  border: 0;
+  font-size: 14px;
+  border-radius: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.current-data-export__icon {
+  width: 1.2em;
+  height: auto;
+}

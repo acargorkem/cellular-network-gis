@@ -1,17 +1,22 @@
 import { configureStore } from '@reduxjs/toolkit';
-import geojsonSliceReducer from './geojsonSlice';
+import kmlSliceReducer from './kmlSlice';
 import markerSliceReducer from './markerSlice';
 import infoboxSliceReducer from './infoboxSlice';
 import coverageControlReducer from './coverageControlSlice';
 
 export const store = configureStore({
   reducer: {
-    coverageArea: geojsonSliceReducer,
+    kmlData: kmlSliceReducer,
     markers: markerSliceReducer,
     infobox: infoboxSliceReducer,
     coverageControl: coverageControlReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+      immutableCheck: false,
+    }),
 });
 
 export default store;

@@ -39,6 +39,19 @@ export const addMarker = createAsyncThunk(
   }
 );
 
+export const updatePosition = createAsyncThunk(
+  'markers/updatePosition',
+  async (data, { rejectWithValue }) => {
+    try {
+      const { coords, index } = data;
+      const coordsWithHeight = await addTerrainHeightToCartographic(coords);
+      return { coordsWithHeight, index };
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const markerSlice = createSlice({
   name: 'markers',
   initialState,
@@ -54,12 +67,20 @@ export const markerSlice = createSlice({
       }
       properties.name = name;
     },
+    deleteFeature: (state, { payload }) => {
+      let { index } = payload;
+      let features = state.geoJson.features;
+      let distances = state.distances;
+      features.splice(index, 1);
+      distances.splice(index, 1);
+    },
     toggleIsAddMarkerActive: (state) => {
       state.isAddMarkerActive = !state.isAddMarkerActive;
     },
     setIsAddMarkerActive: (state, { payload }) => {
       state.isAddMarkerActive = payload;
     },
+    resetMarkerData: () => initialState,
   },
   extraReducers: {
     [addMarker.fulfilled]: (state, { payload }) => {
@@ -76,6 +97,11 @@ export const markerSlice = createSlice({
       alert(payload.errorMessage);
       state.isLoading = false;
     },
+    [updatePosition.fulfilled]: (state, { payload }) => {
+      let { coordsWithHeight, index } = payload;
+      let geometry = state.geoJson.features[index].geometry;
+      geometry.coordinates = coordsWithHeight;
+    },
   },
 });
 
@@ -84,8 +110,10 @@ const { actions, reducer } = markerSlice;
 export const {
   setDistance,
   setPropertyName,
+  deleteFeature,
   toggleIsAddMarkerActive,
   setIsAddMarkerActive,
+  resetMarkerData,
 } = actions;
 
 export default reducer;

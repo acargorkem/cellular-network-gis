@@ -1,11 +1,11 @@
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { fetchGeojsonFromApi } from '../../store/geojsonSlice';
+import { fetchGeojsonFromApi } from '../../store/kmlSlice';
 import { useDropzone } from 'react-dropzone';
 import './FileUpload.css';
 import { FiUpload } from 'react-icons/fi';
 
-const allowedExtensions = /(\.kmz|\.kml)$/i;
+const allowedExtensions = /(\.kmz|\.kml|\.geojson)$/i;
 
 function FileUpload({ isOpen, toggle, fetchGeojsonFromApi }) {
   const { acceptedFiles, getRootProps, getInputProps, open, isDragActive } =
@@ -16,10 +16,16 @@ function FileUpload({ isOpen, toggle, fetchGeojsonFromApi }) {
 
   const handleFileChange = (file) => {
     if (!file) return;
-    if (!allowedExtensions.exec(file.name)) {
-      return alert('Only kml and kmz files are accepted!');
+    if (acceptedFiles.length !== 0) {
+      const confirmText =
+        'You may lose your unsaved work, do you want to continue?';
+      if (!window.confirm(confirmText)) {
+        return;
+      }
     }
-
+    if (!allowedExtensions.exec(file.name)) {
+      return alert('Only kml, kmz and geojson files are accepted!');
+    }
     const data = new FormData();
     data.append('file', file);
     fetchGeojsonFromApi(data);
@@ -33,6 +39,7 @@ function FileUpload({ isOpen, toggle, fetchGeojsonFromApi }) {
   if (!isOpen) {
     return null;
   }
+
   return ReactDOM.createPortal(
     <div className="dropzone-container">
       <div className="dropzone-header">

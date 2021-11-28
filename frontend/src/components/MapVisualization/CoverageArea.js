@@ -79,6 +79,10 @@ export default function CoverageArea(props) {
     });
   };
 
+  if (props.distances.length === 0) {
+    return null;
+  }
+
   return (
     <>
       {renderPolygon(boundsStrongest, polygonOptions.strongest)}

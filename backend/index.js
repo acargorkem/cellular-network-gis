@@ -25,7 +25,7 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const allowedExtensions = /(\.kmz|\.kml)$/i;
+const allowedExtensions = /(\.kmz|\.kml|\.geojson)$/i;
 
 const storage = multer.memoryStorage();
 
@@ -35,7 +35,7 @@ const upload = multer({
     if (allowedExtensions.exec(file.originalname)) {
       return cb(null, true);
     }
-    return cb(new Error('Only .kml and .kmz format allowed!'), false);
+    return cb(new Error('Only .kml, .kmz and .geojson format allowed!'), false);
   },
 }).single('file');
 
@@ -54,7 +54,23 @@ const selectPointFeatures = (feature) => {
   return feature.geometry.type === 'Point';
 };
 
-app.post('/file-upload', async (req, res) => {
+const getDistances = (features) => {
+  if (!features) {
+    return null;
+  }
+  return features.map((feature) => {
+    if (feature.properties.distances) {
+      return feature.properties.distances;
+    }
+    return {
+      top: 300,
+      left: 300,
+      right: 300,
+    };
+  });
+};
+
+app.post('/file-upload/kml', async (req, res) => {
   upload(req, res, async (err) => {
     if (err instanceof multer.MulterError) {
       return res.status(400).send({ errorMessage: err.toString() });
@@ -103,8 +119,31 @@ app.post('/file-upload', async (req, res) => {
       type: 'FeatureCollection',
       features: points,
     };
+    const distances = getDistances(points);
+
     delete file.buffer;
-    return res.send({ file, geoJson });
+    return res.send({ file, geoJson, distances });
+  });
+});
+
+app.post('/file-upload/geojson', async (req, res) => {
+  upload(req, res, async (err) => {
+    if (err instanceof multer.MulterError) {
+      return res.status(400).send({ errorMessage: err.toString() });
+    }
+    if (err) {
+      return res.status(400).send({ errorMessage: err.toString() });
+    }
+    const { file } = req;
+    if (!file) {
+      const error = new Error('Please upload a file');
+      return res.status(400).send({ errorMessage: error.toString() });
+    }
+    const geoJson = JSON.parse(file.buffer.toString('utf-8'));
+    const distances = getDistances(geoJson.features);
+
+    delete file.buffer;
+    return res.send({ file, geoJson, distances });
   });
 });
 
