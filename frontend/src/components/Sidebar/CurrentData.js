@@ -76,7 +76,7 @@ function CurrentData(props) {
       )}
 
       <button onClick={saveData} className="current-data-export">
-        Save Data
+        Export Data
         <FaFileExport className="current-data-export__icon" />
       </button>
     </div>
