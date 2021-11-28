@@ -3,9 +3,9 @@ import { terrainProvider } from '../components/Map';
 
 export const getCartesian3FromScreen = (scene, position) => {
   if (!scene) return;
-  const ellipsoid = scene.globe.ellipsoid;
-  const cartesian3 = scene.camera.pickEllipsoid(position, ellipsoid);
-  return cartesian3;
+  var pickRay = scene.camera.getPickRay(position);
+  var pickedPosition = scene.globe.pick(pickRay, scene);
+  return pickedPosition;
 };
 
 export const getCartopgraphicFromCartesian3 = (scene, cartesian) => {
