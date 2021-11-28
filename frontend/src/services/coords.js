@@ -3,8 +3,8 @@ import { terrainProvider } from '../components/Map';
 
 export const getCartesian3FromScreen = (scene, position) => {
   if (!scene) return;
-  var pickRay = scene.camera.getPickRay(position);
-  var pickedPosition = scene.globe.pick(pickRay, scene);
+  const pickRay = scene.camera.getPickRay(position);
+  const pickedPosition = scene.globe.pick(pickRay, scene);
   return pickedPosition;
 };
 
