@@ -17,11 +17,11 @@ const options = [
   },
   {
     label: 'Rural',
-    value: 2000,
+    value: 750,
   },
   {
     label: 'Village',
-    value: 4000,
+    value: 2000,
   },
 ];
 
