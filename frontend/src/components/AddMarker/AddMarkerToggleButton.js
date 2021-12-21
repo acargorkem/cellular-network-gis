@@ -1,9 +1,11 @@
 import { RiMapPinAddLine } from 'react-icons/ri';
 import { connect } from 'react-redux';
 import { toggleIsAddMarkerActive } from '../../store/markerSlice';
+import { setInfoboxStatus } from '../../store/infoboxSlice';
 
 function AddMarkerToggleButton(props) {
   const toggleIsActive = () => {
+    props.setInfoboxStatus('inactive');
     props.toggleIsAddMarkerActive();
   };
 
@@ -25,7 +27,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = { toggleIsAddMarkerActive };
+const mapDispatchToProps = { toggleIsAddMarkerActive, setInfoboxStatus };
 
 export default connect(
   mapStateToProps,
