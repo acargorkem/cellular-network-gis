@@ -8,13 +8,17 @@ Create a file named <strong>“.env”</strong> under the <strong>frontend</stro
 
 ## Run with Docker
 
->make run-dev
-
-if make is not installed you can run 
+Run the application with docker compose
 
 > docker-compose -f docker-compose.dev.yml up
 
 ## Run without Docker
+Firstly install all dependencies 
 >npm install
 
+Then run the application for development environments
+
 >npm run dev
+
+After that you can access the front-end server at <strong>localhost:3000</strong> 
+and the back-end server at <strong>localhost:5000.</strong> 
