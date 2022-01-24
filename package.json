@@ -4,7 +4,8 @@
   "description": "Cellular Communication GIS application",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\" "
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\" ",
+    "postinstall": "cd backend && npm install && cd.. & cd frontend && npm install && cd .."
   },
   "author": "Görkem Acar",
   "license": "MIT",
