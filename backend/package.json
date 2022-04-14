@@ -1,7 +1,7 @@
 {
   "name": "cellular-network-gis-backend",
   "version": "0.1.0",
-  "main": "index.js",
+  "main": "src/index.js",
   "private": true,
   "dependencies": {
     "@tmcw/togeojson": "^4.5.0",
@@ -26,7 +26,7 @@
     "prettier": "^2.4.1"
   },
   "scripts": {
-    "dev": "nodemon --legacy-watch index.js",
+    "dev": "nodemon --legacy-watch src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
