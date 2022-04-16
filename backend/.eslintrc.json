@@ -16,8 +16,10 @@
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
   },
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "ecmaVersion": 2020
+    "ecmaVersion": 12,
+    "requireConfigFile": false
   },
   "rules": {
     "prettier/prettier": [
@@ -37,6 +39,7 @@
     "node/prefer-promises/fs": "error",
     "linebreak-style": 0,
     "no-console": 0,
-    "no-param-reassign": [2, { "props": false }]
+    "no-param-reassign": [2, { "props": false }],
+    "class-methods-use-this": "off"
   }
 }
